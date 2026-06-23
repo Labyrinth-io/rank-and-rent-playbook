@@ -1,0 +1,2423 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Rank &amp; Rent Playbook — Local Lead Asset Field Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===================== TOKENS ===================== */
+:root{
+  --ink:#0E1714;        /* deep pine-ink base */
+  --ink-2:#13201B;      /* raised */
+  --ink-3:#19291F;      /* card */
+  --ink-line:#27392F;   /* hairlines */
+  --paper:#F3EFE4;      /* warm off-white text */
+  --paper-2:#D8DDCF;
+  --dim:#9CA99D;        /* muted text */
+  --dim-2:#71837A;
+  --amber:#F4A93B;      /* signal / primary */
+  --amber-soft:#FFC76B;
+  --lime:#A9DB45;       /* growth / positive */
+  --lime-soft:#C9ED7E;
+  --coral:#E96A4C;      /* warning / never */
+  --coral-soft:#F39177;
+  --teal:#4CB8A6;       /* info / link */
+  --shadow:0 24px 60px -24px rgba(0,0,0,.65);
+  --maxw:1080px;
+  --disp:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"Hanken Grotesk",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--ink);color:var(--paper);
+  font-family:var(--body);font-size:17px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+/* atmospheric gradient wash */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 12% -5%, rgba(244,169,59,.10), transparent 60%),
+    radial-gradient(820px 560px at 92% 8%, rgba(76,184,166,.09), transparent 60%),
+    radial-gradient(1000px 700px at 70% 100%, rgba(169,219,69,.06), transparent 60%);
+}
+::selection{background:var(--amber);color:#1a1208}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+
+/* ===================== LAYOUT ===================== */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+.band{padding:92px 0;position:relative}
+.band--tight{padding:60px 0}
+.band--hero{padding:48px 0 80px}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--ink-line),transparent);border:0;margin:0}
+
+.eyebrow{
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--amber);display:inline-flex;align-items:center;gap:10px;margin:0 0 18px;
+}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--amber);display:inline-block;opacity:.8}
+.eyebrow.lime{color:var(--lime)}.eyebrow.lime::before{background:var(--lime)}
+.eyebrow.coral{color:var(--coral)}.eyebrow.coral::before{background:var(--coral)}
+.eyebrow.teal{color:var(--teal)}.eyebrow.teal::before{background:var(--teal)}
+
+h1,h2,h3{font-family:var(--disp);font-weight:800;line-height:1.02;margin:0;letter-spacing:-.02em}
+.h-sec{font-size:clamp(30px,5vw,52px);margin-bottom:18px}
+.h-sec .accent{color:var(--amber)}
+.lede{font-size:clamp(18px,2.4vw,21px);color:var(--paper-2);max-width:62ch;margin:0 0 6px;line-height:1.55}
+.muted{color:var(--dim)}
+p{margin:0 0 16px}
+
+/* ===================== TOP PROGRESS + NAV ===================== */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:60;
+  background:linear-gradient(90deg,var(--amber),var(--lime));box-shadow:0 0 14px rgba(244,169,59,.5)}
+#dotnav{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:55;
+  display:flex;flex-direction:column;gap:14px}
+#dotnav a{position:relative;width:11px;height:11px;border-radius:50%;
+  border:1.5px solid var(--dim-2);background:transparent;transition:.25s}
+#dotnav a .lab{position:absolute;right:20px;top:50%;transform:translateY(-50%);
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;white-space:nowrap;
+  color:var(--dim);background:var(--ink-2);border:1px solid var(--ink-line);
+  padding:3px 9px;border-radius:6px;opacity:0;pointer-events:none;transition:.2s}
+#dotnav a:hover .lab{opacity:1}
+#dotnav a:hover{border-color:var(--amber);transform:scale(1.25)}
+#dotnav a.active{background:var(--amber);border-color:var(--amber);box-shadow:0 0 12px rgba(244,169,59,.6)}
+@media (max-width:1180px){#dotnav{display:none}}
+
+/* ===================== HERO ===================== */
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);
+  padding-top:26px}
+.hero-top .badge{display:inline-flex;align-items:center;gap:9px;color:var(--paper-2)}
+.hero-top .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);
+  animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hero h1{font-size:clamp(44px,9vw,104px);letter-spacing:-.03em;margin:30px 0 0}
+.hero h1 .amber{color:var(--amber)}
+.hero h1 .out{color:transparent;-webkit-text-stroke:1.4px var(--paper-2)}
+.hero-sub{font-size:clamp(18px,2.6vw,23px);color:var(--paper-2);max-width:60ch;margin:24px 0 0;line-height:1.5}
+.hero-meta{display:flex;gap:26px;flex-wrap:wrap;margin-top:30px;
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--dim)}
+.hero-meta b{color:var(--paper);font-weight:600}
+
+/* value-chain pipeline */
+.pipe-card{margin-top:54px;background:linear-gradient(180deg,var(--ink-2),var(--ink));
+  border:1px solid var(--ink-line);border-radius:20px;padding:30px 26px 26px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.pipe-card .ph{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:26px;gap:12px;flex-wrap:wrap}
+.pipe-card .ph .t{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.pipe-card .ph .live{font-family:var(--mono);font-size:11px;color:var(--lime);letter-spacing:.1em}
+.pipe{display:flex;align-items:stretch;gap:0}
+.node{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:0 4px}
+.node .ico{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;
+  background:var(--ink-3);border:1px solid var(--ink-line);color:var(--paper-2)}
+.node .ico svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7}
+.node .num{font-family:var(--mono);font-weight:600;font-size:clamp(18px,2.6vw,26px);color:var(--paper);letter-spacing:-.01em}
+.node .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);line-height:1.3}
+.node.final .ico{background:rgba(244,169,59,.14);border-color:rgba(244,169,59,.5);color:var(--amber)}
+.node.final .num{color:var(--amber)}
+.conn{flex:0 0 36px;align-self:flex-start;margin-top:20px;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,transparent,var(--amber),transparent);background-size:55% 100%;
+  animation:flow 2.4s linear infinite}
+@keyframes flow{0%{background-position:-55% 0}100%{background-position:155% 0}}
+.pipe-note{font-family:var(--mono);font-size:11.5px;color:var(--dim-2);margin-top:22px;text-align:center;letter-spacing:.03em}
+@media (max-width:720px){
+  .pipe{flex-direction:column}
+  .node{flex-direction:row;justify-content:flex-start;text-align:left;gap:14px;padding:10px 0;width:100%}
+  .node .lbl{flex:1}
+  .conn{flex:0 0 22px;width:2px;height:22px;align-self:flex-start;margin:0 0 0 20px;
+    background:linear-gradient(180deg,transparent,var(--amber),transparent);background-size:100% 55%;
+    animation:flowv 2.4s linear infinite}
+  @keyframes flowv{0%{background-position:0 -55%}100%{background-position:0 155%}}
+}
+
+/* ===================== GENERIC COMPONENTS ===================== */
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+.card{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:16px;padding:24px;transition:.25s}
+.card:hover{transform:translateY(-3px);border-color:#37503f;box-shadow:var(--shadow)}
+.card h3{font-size:20px;margin-bottom:8px}
+.card .k{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:12px}
+.card ul{margin:6px 0 0;padding:0;list-style:none}
+.card li{position:relative;padding-left:22px;margin:7px 0;color:var(--paper-2);font-size:15.5px;line-height:1.5}
+.card li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;border-radius:2px;background:var(--lime);transform:rotate(45deg)}
+
+.statement{font-family:var(--disp);font-weight:700;font-size:clamp(26px,4.6vw,44px);line-height:1.12;letter-spacing:-.02em}
+.statement .am{color:var(--amber)}.statement .li{color:var(--lime)}
+
+.pill{display:inline-block;font-family:var(--mono);font-size:13px;padding:7px 14px;border-radius:999px;
+  border:1px solid var(--ink-line);background:var(--ink-2);color:var(--paper-2);margin:5px 6px 0 0;letter-spacing:.02em}
+.pill.amber{border-color:rgba(244,169,59,.4);color:var(--amber-soft);background:rgba(244,169,59,.08)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.08s}.reveal[data-d="2"]{transition-delay:.16s}
+.reveal[data-d="3"]{transition-delay:.24s}.reveal[data-d="4"]{transition-delay:.32s}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}
+  .conn{animation:none;background-position:50% 0}.hero-top .dot{animation:none}}
+
+/* ===================== THE SIMPLE MODEL — rail ===================== */
+.rail{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:34px}
+@media (max-width:860px){.rail{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.rail{grid-template-columns:1fr}}
+.step{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:13px;padding:16px 16px 18px;position:relative;transition:.25s}
+.step:hover{border-color:#37503f;transform:translateY(-3px)}
+.step .n{font-family:var(--mono);font-weight:600;font-size:13px;color:var(--ink);background:var(--amber);
+  width:30px;height:30px;border-radius:8px;display:grid;place-items:center;margin-bottom:11px}
+.step.last .n{background:var(--lime)}
+.step p{margin:0;font-size:14.5px;color:var(--paper-2);line-height:1.45}
+
+/* ===================== FEATURE / FIRST ASSET ===================== */
+.feature{background:linear-gradient(135deg,rgba(244,169,59,.10),rgba(169,219,69,.05));
+  border:1px solid rgba(244,169,59,.28);border-radius:22px;padding:38px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.feature .tag{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:14px}
+.feature h2{font-size:clamp(28px,4.4vw,42px);margin-bottom:10px}
+.feature h2 .am{color:var(--amber)}
+.feature .why{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+@media (max-width:760px){.feature .why{grid-template-columns:1fr}.feature{padding:26px}}
+.whychip{background:rgba(14,23,20,.55);border:1px solid var(--ink-line);border-radius:12px;padding:14px 16px}
+.whychip .h{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);margin-bottom:5px}
+.whychip p{margin:0;font-size:14px;color:var(--paper-2)}
+.domains{margin-top:26px;display:flex;gap:8px;flex-wrap:wrap}
+.dom{font-family:var(--mono);font-size:13.5px;background:var(--ink);border:1px dashed var(--ink-line);
+  border-radius:9px;padding:9px 14px;color:var(--paper-2)}
+.dom .ext{color:var(--amber)}
+
+/* ===================== PHASES / STAGES ===================== */
+.phase{margin-top:46px;scroll-margin-top:30px}
+.phase-head{display:flex;align-items:flex-end;gap:18px;border-bottom:1px solid var(--ink-line);padding-bottom:18px;margin-bottom:24px}
+.phase-head .pn{font-family:var(--mono);font-weight:600;font-size:clamp(38px,7vw,72px);line-height:.8;color:var(--ink-3);
+  -webkit-text-stroke:1.4px var(--amber);letter-spacing:-.02em;flex:0 0 auto}
+.phase-head .pt{display:flex;flex-direction:column;gap:4px}
+.phase-head .pt .e{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber)}
+.phase-head .pt h3{font-size:clamp(22px,3.4vw,32px)}
+.phase-head .pt .stages{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.stagegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.stagegrid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.stagegrid{grid-template-columns:1fr}}
+.stage{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:14px;padding:20px;transition:.25s;position:relative}
+.stage:hover{transform:translateY(-3px);border-color:#37503f;box-shadow:var(--shadow)}
+.stage .sn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--dim-2)}
+.stage h4{font-family:var(--disp);font-weight:700;font-size:17.5px;margin:4px 0 12px;letter-spacing:-.01em;color:var(--paper)}
+.stage ul{margin:0;padding:0;list-style:none}
+.stage li{position:relative;padding-left:18px;font-size:14px;color:var(--paper-2);margin:6px 0;line-height:1.45}
+.stage li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--amber)}
+
+/* ===================== COMPARISON (good/bad, never/always) ===================== */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+@media (max-width:720px){.cmp{grid-template-columns:1fr}}
+.col{border-radius:16px;padding:24px;border:1px solid}
+.col.good{background:rgba(169,219,69,.06);border-color:rgba(169,219,69,.3)}
+.col.bad{background:rgba(233,106,76,.06);border-color:rgba(233,106,76,.3)}
+.col .ch{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.col.good .ch{color:var(--lime)}.col.bad .ch{color:var(--coral)}
+.col .ch .g{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-weight:700;font-family:var(--body)}
+.col.good .ch .g{background:rgba(169,219,69,.16);color:var(--lime)}
+.col.bad .ch .g{background:rgba(233,106,76,.16);color:var(--coral)}
+.col ul{margin:0;padding:0;list-style:none}
+.col li{position:relative;padding-left:24px;margin:9px 0;font-size:15px;color:var(--paper-2);line-height:1.45}
+.col li::before{position:absolute;left:0;top:0;font-family:var(--body);font-weight:700}
+.col.good li::before{content:"✓";color:var(--lime)}
+.col.bad li::before{content:"✕";color:var(--coral)}
+
+.kwflip{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+@media (max-width:620px){.kwflip{grid-template-columns:1fr}}
+.kwbox{border:1px solid var(--ink-line);border-radius:13px;padding:18px;background:var(--ink-2)}
+.kwbox .lab{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.kwbox.tooBroad .lab{color:var(--coral)}.kwbox.better .lab{color:var(--lime)}
+.kwbox code{display:block;font-family:var(--mono);font-size:13.5px;color:var(--paper-2);padding:6px 0;border-bottom:1px dotted var(--ink-line)}
+.kwbox code:last-child{border-bottom:0}
+
+/* ===================== METRICS DASHBOARD ===================== */
+.metric{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:14px;padding:20px;transition:.25s}
+.metric:hover{border-color:#37503f}
+.metric .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.metric .name{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+.metric .spark{width:64px;height:26px}
+.metric .spark path{fill:none;stroke:var(--lime);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.metric .spark .area{fill:rgba(169,219,69,.12);stroke:none}
+.metric h4{font-family:var(--disp);font-weight:700;font-size:18px;margin:10px 0 6px;color:var(--paper)}
+.metric p{margin:0;font-size:14px;color:var(--dim);line-height:1.45}
+
+.sub-h{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin:34px 0 14px}
+.eventrow{display:flex;flex-wrap:wrap;gap:8px}
+.ev{font-family:var(--mono);font-size:13px;background:var(--ink-2);border:1px solid var(--ink-line);
+  border-radius:8px;padding:8px 13px;color:var(--paper-2)}
+.ev.star{border-color:rgba(244,169,59,.45);color:var(--amber);background:rgba(244,169,59,.08)}
+
+/* ===================== TRACKER TABS ===================== */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:30px}
+.tab{font-family:var(--mono);font-size:13px;letter-spacing:.04em;padding:10px 16px;border-radius:10px 10px 0 0;
+  border:1px solid var(--ink-line);border-bottom:0;background:var(--ink-2);color:var(--dim);cursor:pointer;transition:.2s}
+.tab:hover{color:var(--paper-2)}
+.tab.active{background:var(--ink-3);color:var(--amber);border-color:#37503f}
+.tabpane{border:1px solid var(--ink-line);border-radius:0 14px 14px 14px;padding:24px;background:var(--ink-3);margin-top:-1px}
+.tabpane h4{font-family:var(--disp);font-weight:700;font-size:19px;margin:0 0 4px}
+.tabpane .desc{font-size:14.5px;color:var(--dim);margin:0 0 16px}
+.cols{display:flex;flex-wrap:wrap;gap:8px}
+.colchip{font-family:var(--mono);font-size:12.5px;background:var(--ink);border:1px solid var(--ink-line);
+  border-radius:7px;padding:6px 11px;color:var(--paper-2)}
+.qualkey{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.qk{font-family:var(--mono);font-size:11.5px;padding:5px 11px;border-radius:999px;border:1px solid}
+.qk.b{color:var(--coral);border-color:rgba(233,106,76,.4)}
+.qk.u{color:var(--dim);border-color:var(--ink-line)}
+.qk.q{color:var(--lime);border-color:rgba(169,219,69,.4)}
+.qk.bk{color:var(--amber);border-color:rgba(244,169,59,.4)}
+
+/* ===================== PRICING ===================== */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}
+@media (max-width:820px){.tiers{grid-template-columns:1fr}}
+.tier{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:18px;padding:28px 24px;position:relative;transition:.25s}
+.tier:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.tier.feat{border-color:var(--amber);background:linear-gradient(180deg,rgba(244,169,59,.10),var(--ink-2))}
+.tier .badge{position:absolute;top:-12px;right:20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;background:var(--amber);color:#1a1208;padding:5px 11px;border-radius:999px;font-weight:600}
+.tier .tn{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.tier .price{font-family:var(--disp);font-weight:800;font-size:clamp(30px,4.5vw,40px);margin:10px 0 2px;letter-spacing:-.02em}
+.tier.feat .price{color:var(--amber)}
+.tier .per{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.tier .for{font-size:14.5px;color:var(--paper-2);margin:14px 0 0;line-height:1.5}
+.trial{margin-top:18px;border:1px dashed rgba(76,184,166,.5);border-radius:14px;padding:20px 24px;
+  background:rgba(76,184,166,.06);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.trial .ti{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.trial p{margin:0;font-size:15.5px;color:var(--paper-2)}
+
+/* ===================== RENT LADDER CHART ===================== */
+.ladder{margin-top:32px;display:grid;grid-template-columns:1fr;gap:0;
+  border:1px solid var(--ink-line);border-radius:16px;padding:26px 24px;background:var(--ink-2)}
+.lrow{display:grid;grid-template-columns:150px 1fr 130px;align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid var(--ink-line)}
+.lrow:last-child{border-bottom:0}
+.lrow .leads{font-family:var(--mono);font-size:13px;color:var(--paper-2);letter-spacing:.02em}
+.lrow .bartrack{height:16px;background:var(--ink);border-radius:999px;overflow:hidden;position:relative}
+.lrow .barfill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--lime),var(--amber));transition:width 1.1s cubic-bezier(.2,.7,.2,1)}
+.lrow .rent{font-family:var(--mono);font-weight:600;font-size:15px;color:var(--amber);text-align:right}
+@media (max-width:600px){.lrow{grid-template-columns:1fr;gap:6px}.lrow .rent{text-align:left}}
+
+/* ===================== MONTHLY REPORT COUNTERS ===================== */
+.report{background:linear-gradient(180deg,var(--ink-2),var(--ink));border:1px solid var(--ink-line);
+  border-radius:20px;padding:34px;box-shadow:var(--shadow);margin-top:30px}
+.report .rh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:26px;
+  border-bottom:1px solid var(--ink-line);padding-bottom:18px}
+.report .rh .site{font-family:var(--disp);font-weight:700;font-size:20px}
+.report .rh .mo{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber)}
+.counts{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+@media (max-width:780px){.counts{grid-template-columns:repeat(2,1fr)}}
+.count .v{font-family:var(--mono);font-weight:600;font-size:clamp(26px,4vw,38px);color:var(--paper);letter-spacing:-.01em}
+.count.hi .v{color:var(--amber)}
+.count .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-top:4px}
+.report .foot{margin-top:26px;display:flex;gap:8px;flex-wrap:wrap}
+
+/* ===================== TIMELINE 30 DAYS ===================== */
+.timeline{position:relative;margin-top:34px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media (max-width:840px){.timeline{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.timeline{grid-template-columns:1fr}}
+.week{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:14px;padding:20px;position:relative;transition:.25s}
+.week:hover{transform:translateY(-3px);border-color:#37503f}
+.week .wk{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber)}
+.week h4{font-family:var(--disp);font-weight:700;font-size:18px;margin:6px 0 12px}
+.week ul{margin:0;padding:0;list-style:none}
+.week li{font-size:14px;color:var(--paper-2);padding-left:16px;position:relative;margin:6px 0;line-height:1.4}
+.week li::before{content:"›";position:absolute;left:0;color:var(--lime);font-weight:700}
+
+/* ===================== 90 DAY CHECKLIST ===================== */
+.goalwrap{display:grid;grid-template-columns:230px 1fr;gap:30px;margin-top:32px;align-items:center}
+@media (max-width:760px){.goalwrap{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.ring{position:relative;width:200px;height:200px}
+.ring svg{transform:rotate(-90deg)}
+.ring .bg{fill:none;stroke:var(--ink-line);stroke-width:14}
+.ring .fg{fill:none;stroke:url(#ggrad);stroke-width:14;stroke-linecap:round;
+  stroke-dasharray:534;stroke-dashoffset:534;transition:stroke-dashoffset .6s cubic-bezier(.2,.7,.2,1)}
+.ring .pct{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring .pct b{font-family:var(--mono);font-weight:600;font-size:40px;color:var(--lime);display:block;line-height:1}
+.ring .pct span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.checks li{display:flex;align-items:center;gap:14px;background:var(--ink-2);border:1px solid var(--ink-line);
+  border-radius:11px;padding:13px 16px;cursor:pointer;transition:.18s;user-select:none}
+.checks li:hover{border-color:#37503f}
+.checks li .box{width:22px;height:22px;border-radius:6px;border:1.6px solid var(--dim-2);flex:0 0 auto;
+  display:grid;place-items:center;transition:.18s}
+.checks li .box svg{width:13px;height:13px;stroke:#1a1208;stroke-width:3;fill:none;opacity:0;transition:.18s}
+.checks li.done .box{background:var(--lime);border-color:var(--lime)}
+.checks li.done .box svg{opacity:1}
+.checks li .txt{font-size:15px;color:var(--paper-2);transition:.18s}
+.checks li.done .txt{color:var(--dim);text-decoration:line-through}
+.goalhint{font-family:var(--mono);font-size:12px;color:var(--dim-2);margin-top:14px;text-align:center}
+
+/* ===================== WEEKLY RHYTHM ===================== */
+.rhythm{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}
+@media (max-width:760px){.rhythm{grid-template-columns:1fr}}
+.day{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:16px;padding:24px;transition:.25s}
+.day:hover{transform:translateY(-3px);border-color:#37503f}
+.day .dh{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.day .dh .badge{font-family:var(--mono);font-weight:600;font-size:13px;width:46px;height:46px;border-radius:12px;
+  display:grid;place-items:center;background:var(--ink-3);color:var(--amber);border:1px solid var(--ink-line)}
+.day .dh h4{font-family:var(--disp);font-weight:700;font-size:19px}
+.day ol{margin:0;padding-left:20px;color:var(--paper-2);font-size:14.5px}
+.day ol li{margin:6px 0;line-height:1.45}
+
+/* ===================== DECISION RULES ===================== */
+.decgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:30px}
+@media (max-width:760px){.decgrid{grid-template-columns:1fr}}
+.dec{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:14px;padding:20px 22px;transition:.25s}
+.dec:hover{border-color:#37503f;transform:translateY(-2px)}
+.dec .if{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin-bottom:6px}
+.dec .ifc{font-size:16px;color:var(--paper);font-weight:600;margin-bottom:14px}
+.dec .arrow{font-family:var(--mono);color:var(--amber);font-size:13px;letter-spacing:.1em;margin-bottom:8px}
+.dec ul{margin:0;padding:0;list-style:none}
+.dec li{position:relative;padding-left:18px;font-size:14px;color:var(--paper-2);margin:5px 0;line-height:1.4}
+.dec li::before{content:"→";position:absolute;left:0;color:var(--lime)}
+
+/* ===================== TITLE FIX EXAMPLE ===================== */
+.titlefix{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+@media (max-width:620px){.titlefix{grid-template-columns:1fr}}
+.tf{border-radius:13px;padding:18px 20px;border:1px solid}
+.tf.weak{border-color:rgba(233,106,76,.35);background:rgba(233,106,76,.05)}
+.tf.strong{border-color:rgba(169,219,69,.35);background:rgba(169,219,69,.05)}
+.tf .lab{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.tf.weak .lab{color:var(--coral)}.tf.strong .lab{color:var(--lime)}
+.tf code{font-family:var(--mono);font-size:14px;color:var(--paper)}
+
+/* ===================== CLOSING ===================== */
+.closing{text-align:center;padding:110px 0 96px;position:relative}
+.closing .big{font-family:var(--disp);font-weight:800;font-size:clamp(28px,5.5vw,56px);line-height:1.08;letter-spacing:-.025em;max-width:18ch;margin:0 auto 26px}
+.closing .big .am{color:var(--amber)}.closing .big .li{color:var(--lime)}
+.closing .sub{color:var(--dim);max-width:54ch;margin:0 auto;font-size:17px}
+.mantra{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:34px}
+.mantra span{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--paper-2);
+  border:1px solid var(--ink-line);border-radius:999px;padding:9px 16px;background:var(--ink-2)}
+.mantra span b{color:var(--amber);font-weight:600}
+
+footer{border-top:1px solid var(--ink-line);padding:30px 0;text-align:center;
+  font-family:var(--mono);font-size:12px;color:var(--dim-2);letter-spacing:.06em}
+
+/* ===================== PAGE SWITCHER ===================== */
+#pageswitcher{
+  position:sticky;top:0;z-index:58;background:rgba(14,23,20,.92);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--ink-line);
+}
+#pageswitcher .inner{
+  max-width:var(--maxw);margin:0 auto;padding:0 26px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  min-height:54px;
+}
+#pageswitcher .brand{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim-2)}
+.pgtabs{display:flex;gap:4px}
+.pgtab{
+  font-family:var(--mono);font-size:13px;letter-spacing:.06em;padding:9px 18px;border-radius:10px;
+  border:1px solid transparent;background:transparent;color:var(--dim);cursor:pointer;transition:.2s;
+  white-space:nowrap;
+}
+.pgtab:hover{color:var(--paper-2);background:var(--ink-2)}
+.pgtab.active{background:var(--ink-2);border-color:var(--amber);color:var(--amber)}
+.page{display:none}.page.active{display:block}
+
+/* ===================== CHECKLIST PAGE ===================== */
+#cl-hero{padding:60px 0 40px;text-align:center}
+#cl-hero h1{font-size:clamp(32px,6vw,60px);letter-spacing:-.03em;margin-bottom:16px}
+#cl-hero h1 .am{color:var(--amber)}
+#cl-hero p{color:var(--paper-2);font-size:18px;max-width:54ch;margin:0 auto}
+.cl-progress-wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px 40px}
+.cl-progress-bar-track{height:8px;background:var(--ink-line);border-radius:999px;overflow:hidden;margin-bottom:12px}
+.cl-progress-bar-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--lime),var(--amber));transition:width .4s cubic-bezier(.2,.7,.2,1)}
+.cl-progress-info{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.cl-progress-pct{font-family:var(--mono);font-size:28px;font-weight:600;color:var(--lime);letter-spacing:-.01em}
+.cl-progress-label{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.cl-reset{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--dim-2);background:none;
+  border:1px solid var(--ink-line);border-radius:8px;padding:6px 12px;cursor:pointer;transition:.2s}
+.cl-reset:hover{color:var(--coral);border-color:rgba(233,106,76,.4)}
+
+.cl-grid{max-width:var(--maxw);margin:0 auto;padding:0 26px 80px;
+  display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+@media(max-width:820px){.cl-grid{grid-template-columns:1fr}}
+
+.cl-section{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:18px;padding:24px;
+  transition:.25s;position:relative;overflow:hidden}
+.cl-section::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--amber),transparent);opacity:0;transition:.3s}
+.cl-section.all-done::before{opacity:1;background:linear-gradient(90deg,var(--lime),transparent)}
+.cl-section:hover{border-color:#37503f}
+.cl-sec-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--ink-line)}
+.cl-sec-num{
+  font-family:var(--mono);font-weight:600;font-size:13px;min-width:36px;height:36px;
+  border-radius:10px;display:grid;place-items:center;
+  background:rgba(244,169,59,.12);border:1px solid rgba(244,169,59,.3);color:var(--amber);flex:0 0 auto;
+}
+.cl-section.all-done .cl-sec-num{background:rgba(169,219,69,.12);border-color:rgba(169,219,69,.3);color:var(--lime)}
+.cl-sec-title{font-family:var(--disp);font-weight:700;font-size:17px;letter-spacing:-.01em;color:var(--paper);margin:0;line-height:1.2}
+.cl-sec-count{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--dim);margin-top:4px}
+
+.cl-note{font-family:var(--mono);font-size:12px;color:var(--dim-2);background:var(--ink-3);
+  border:1px dashed var(--ink-line);border-radius:9px;padding:10px 13px;margin-bottom:14px;line-height:1.5}
+.cl-note b{color:var(--amber)}
+
+.cl-items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.cl-item{
+  display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;
+  border:1px solid transparent;cursor:pointer;transition:.18s;user-select:none;
+  background:var(--ink-3);
+}
+.cl-item:hover{border-color:var(--ink-line);background:rgba(255,255,255,.03)}
+.cl-item:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.cl-box{
+  width:22px;height:22px;border-radius:7px;border:1.5px solid var(--dim-2);flex:0 0 auto;
+  display:grid;place-items:center;transition:.18s;background:transparent;
+}
+.cl-box svg{width:12px;height:12px;stroke:#1a1208;stroke-width:3;fill:none;opacity:0;transition:.15s}
+.cl-item.done .cl-box{background:var(--lime);border-color:var(--lime)}
+.cl-item.done .cl-box svg{opacity:1}
+.cl-item .cl-text{font-size:15px;color:var(--paper-2);transition:.2s;line-height:1.4}
+.cl-item.done .cl-text{color:var(--dim-2);text-decoration:line-through;text-decoration-color:rgba(113,131,122,.5)}
+
+/* site suggestion cards */
+.cl-sites{max-width:var(--maxw);margin:0 auto;padding:0 26px 80px}
+.cl-sites-head{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);margin-bottom:16px}
+.cl-sites-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.cl-sites-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.cl-sites-grid{grid-template-columns:1fr}}
+.cl-site{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:14px;padding:18px 16px;transition:.2s}
+.cl-site:hover{border-color:#37503f;transform:translateY(-2px)}
+.cl-site .sn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.cl-site h4{font-family:var(--disp);font-weight:700;font-size:15px;color:var(--paper);margin:0}
+
+/* ===================== DOMAIN SCOUT ===================== */
+#ds-hero{padding:54px 0 32px;text-align:center}
+#ds-hero h1{font-size:clamp(32px,6vw,60px);letter-spacing:-.03em;margin-bottom:14px}
+#ds-hero h1 .am{color:var(--amber)}
+#ds-hero .sub{color:var(--paper-2);font-size:18px;max-width:56ch;margin:0 auto 14px}
+#ds-hero .note{font-family:var(--mono);font-size:12px;color:var(--dim-2);background:rgba(244,169,59,.07);
+  border:1px solid rgba(244,169,59,.2);border-radius:9px;display:inline-block;padding:8px 16px;margin-top:4px}
+
+.ds-wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+
+/* controls */
+.ds-controls{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:18px;padding:26px;
+  display:grid;grid-template-columns:1fr 1fr 1fr auto auto;gap:14px;align-items:end;margin-bottom:28px}
+@media(max-width:900px){.ds-controls{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.ds-controls{grid-template-columns:1fr}}
+.ds-field{display:flex;flex-direction:column;gap:6px}
+.ds-field label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber)}
+.ds-field input,.ds-field select{
+  background:var(--ink);border:1px solid var(--ink-line);border-radius:10px;
+  color:var(--paper);font-family:var(--body);font-size:15px;padding:11px 14px;
+  outline:none;transition:.2s;width:100%;
+}
+.ds-field input:focus,.ds-field select:focus{border-color:rgba(244,169,59,.5);box-shadow:0 0 0 3px rgba(244,169,59,.1)}
+.ds-field select option{background:var(--ink-2)}
+.ds-btn{font-family:var(--mono);font-size:13px;letter-spacing:.06em;padding:12px 20px;border-radius:10px;
+  border:none;cursor:pointer;transition:.2s;white-space:nowrap;align-self:flex-end}
+.ds-btn.primary{background:var(--amber);color:#1a1208;font-weight:600}
+.ds-btn.primary:hover{background:var(--amber-soft);transform:translateY(-1px)}
+.ds-btn.secondary{background:var(--ink);border:1px solid var(--ink-line);color:var(--paper-2)}
+.ds-btn.secondary:hover{border-color:rgba(244,169,59,.4);color:var(--amber)}
+
+/* demo notice */
+.ds-demo-notice{display:flex;align-items:center;gap:12px;background:rgba(76,184,166,.08);
+  border:1px solid rgba(76,184,166,.3);border-radius:12px;padding:14px 18px;margin-bottom:24px;flex-wrap:wrap}
+.ds-demo-notice .icon{font-size:18px;flex:0 0 auto}
+.ds-demo-notice p{font-family:var(--mono);font-size:12.5px;color:var(--teal);margin:0;letter-spacing:.02em}
+.ds-demo-notice .connect-hint{color:var(--dim);font-size:11.5px;margin-top:3px}
+
+/* stale notice */
+.ds-stale{display:none;font-family:var(--mono);font-size:12px;color:var(--amber);background:rgba(244,169,59,.07);
+  border:1px solid rgba(244,169,59,.25);border-radius:9px;padding:9px 15px;margin-bottom:18px}
+
+/* stats bar */
+.ds-stats{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:26px;align-items:center}
+.ds-stat{font-family:var(--mono);font-size:13px;color:var(--dim)}
+.ds-stat b{color:var(--paper)}
+.ds-stat.hi b{color:var(--lime)}
+.ds-timestamp{font-family:var(--mono);font-size:11.5px;color:var(--dim-2);margin-left:auto}
+
+/* loading */
+.ds-loading{text-align:center;padding:60px 0;display:none}
+.ds-loading .spinner{width:36px;height:36px;border:3px solid var(--ink-line);border-top-color:var(--amber);
+  border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ds-loading p{font-family:var(--mono);font-size:13px;color:var(--dim);letter-spacing:.06em}
+
+/* shortlist panel */
+.ds-shortlist-wrap{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:18px;padding:24px;margin-bottom:28px}
+.ds-shortlist-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.ds-shortlist-head h3{font-family:var(--disp);font-weight:700;font-size:18px;margin:0}
+.ds-shortlist-head .count{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--amber)}
+.ds-shortlist-empty{font-family:var(--mono);font-size:13px;color:var(--dim-2);text-align:center;padding:20px 0}
+.ds-shortlist-items{display:flex;flex-direction:column;gap:8px}
+.ds-sl-item{display:flex;align-items:center;gap:12px;background:var(--ink-3);border:1px solid var(--ink-line);
+  border-radius:10px;padding:12px 14px;flex-wrap:wrap}
+.ds-sl-domain{font-family:var(--mono);font-size:13.5px;color:var(--paper);flex:1}
+.ds-sl-rent{font-family:var(--mono);font-size:12px;color:var(--lime)}
+.ds-sl-score{font-family:var(--mono);font-size:11px;color:var(--amber);background:rgba(244,169,59,.1);
+  border:1px solid rgba(244,169,59,.25);border-radius:6px;padding:3px 8px}
+.ds-sl-remove{font-family:var(--mono);font-size:11px;color:var(--dim-2);background:none;border:none;cursor:pointer;padding:2px 6px;transition:.2s}
+.ds-sl-remove:hover{color:var(--coral)}
+
+/* results */
+.ds-results{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:80px}
+@media(max-width:860px){.ds-results{grid-template-columns:1fr}}
+
+.ds-card{background:var(--ink-2);border:1px solid var(--ink-line);border-radius:18px;padding:22px;
+  transition:.25s;position:relative;overflow:hidden}
+.ds-card:hover{border-color:#37503f;transform:translateY(-2px);box-shadow:var(--shadow)}
+.ds-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--lime),var(--amber))}
+
+.ds-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px}
+.ds-card-domain{font-family:var(--mono);font-weight:600;font-size:clamp(13px,2vw,15.5px);color:var(--paper);
+  word-break:break-all;line-height:1.4}
+.ds-avail{font-family:var(--mono);font-size:11px;letter-spacing:.1em;padding:5px 10px;border-radius:999px;
+  white-space:nowrap;flex:0 0 auto}
+.ds-avail.available{background:rgba(169,219,69,.12);border:1px solid rgba(169,219,69,.4);color:var(--lime)}
+.ds-avail.demo{background:rgba(76,184,166,.1);border:1px solid rgba(76,184,166,.3);color:var(--teal)}
+
+.ds-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-bottom:14px}
+.ds-meta-item .ml{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim-2);margin-bottom:2px}
+.ds-meta-item .mv{font-family:var(--mono);font-size:13px;color:var(--paper-2)}
+.ds-meta-item .mv.green{color:var(--lime)}
+.ds-meta-item .mv.amber{color:var(--amber)}
+
+.ds-why{font-size:14px;color:var(--dim);line-height:1.5;margin-bottom:16px;padding:10px 13px;
+  background:var(--ink-3);border-radius:9px;border-left:3px solid var(--amber)}
+
+/* opportunity score */
+.ds-score-wrap{margin-bottom:16px}
+.ds-score-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.ds-score-label span{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim-2)}
+.ds-score-label b{font-family:var(--mono);font-size:14px;color:var(--amber)}
+.ds-score-track{height:7px;background:var(--ink);border-radius:999px;overflow:hidden}
+.ds-score-fill{height:100%;border-radius:999px;transition:width .9s cubic-bezier(.2,.7,.2,1);
+  background:linear-gradient(90deg,var(--lime),var(--amber))}
+
+/* card actions */
+.ds-actions{display:flex;gap:8px;flex-wrap:wrap}
+.ds-act{font-family:var(--mono);font-size:12px;letter-spacing:.04em;padding:8px 13px;border-radius:8px;
+  border:1px solid var(--ink-line);background:var(--ink-3);color:var(--paper-2);cursor:pointer;transition:.2s}
+.ds-act:hover{border-color:rgba(244,169,59,.4);color:var(--amber)}
+.ds-act.added{border-color:rgba(169,219,69,.4);color:var(--lime)}
+.ds-act.godaddy{background:rgba(244,169,59,.1);border-color:rgba(244,169,59,.35);color:var(--amber)}
+.ds-act.godaddy:hover{background:rgba(244,169,59,.2)}
+
+/* empty state */
+.ds-empty{text-align:center;padding:70px 20px;display:none}
+.ds-empty .ico{font-size:42px;margin-bottom:16px}
+.ds-empty h3{font-family:var(--disp);font-weight:700;font-size:22px;margin:0 0 8px}
+.ds-empty p{color:var(--dim);max-width:44ch;margin:0 auto}
+
+/* ===================== PRINT ===================== */
+@media print{
+  :root{--ink:#fff;--ink-2:#fff;--ink-3:#fafafa;--ink-line:#ddd;--paper:#111;--paper-2:#222;--dim:#555;--dim-2:#777}
+  body{background:#fff;color:#111}
+  body::before,#progress,#dotnav,.conn{display:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+  .band{padding:26px 0;page-break-inside:avoid}
+  .card,.stage,.tier,.week,.dec,.metric,.col,.report,.feature,.pipe-card{box-shadow:none;page-break-inside:avoid}
+  .h-sec .accent,.statement .am,.tier.feat .price,.count.hi .v{color:#b06a00}
+  a{color:#111}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<!-- ===================== PAGE SWITCHER NAV ===================== -->
+<div id="pageswitcher">
+  <div class="inner">
+    <span class="brand">R&amp;R Playbook</span>
+    <div class="pgtabs" role="tablist">
+      <button class="pgtab active" data-page="page-playbook" role="tab" aria-selected="true">📖 Full Playbook</button>
+      <button class="pgtab" data-page="page-checklist" role="tab" aria-selected="false">✅ Simple Checklist</button>
+      <button class="pgtab" data-page="page-scout" role="tab" aria-selected="false">🔍 Domain Scout</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== DOMAIN SCOUT PAGE ===================== -->
+<div class="page" id="page-scout">
+
+  <div id="ds-hero">
+    <div class="wrap">
+      <h1>Domain <span class="am">Scout</span></h1>
+      <p class="sub">Find available <code style="font-family:var(--mono);color:var(--amber)">.com.au</code> domains for local lead assets that can realistically rent for $500+/month.</p>
+      <div class="note">Availability should be rechecked before purchase. .com.au domains require an ABN or ACN.</div>
+    </div>
+  </div>
+
+  <div class="ds-wrap">
+
+    <!-- CONTROLS -->
+    <div class="ds-controls">
+      <div class="ds-field">
+        <label for="ds-city">City / Location</label>
+        <input type="text" id="ds-city" placeholder="e.g. Logan, Bundaberg, Hervey Bay" autocomplete="off">
+      </div>
+      <div class="ds-field">
+        <label for="ds-niche">Niche Category</label>
+        <select id="ds-niche">
+          <option value="all">All High-Ticket Niches</option>
+          <option value="termiteBarriers">Termite Barriers</option>
+          <option value="termiteTreatment">Termite Treatment</option>
+          <option value="termiteInspection">Termite Inspection</option>
+          <option value="solarBattery">Solar Battery Installation</option>
+          <option value="bathroomRenovations">Bathroom Renovations</option>
+          <option value="roofRestoration">Roof Restoration</option>
+          <option value="roofPainting">Roof Painting</option>
+          <option value="roofLeakRepairs">Roof Leak Repairs</option>
+          <option value="concreteDriveways">Concrete Driveways</option>
+          <option value="grannyFlats">Granny Flats</option>
+          <option value="asbestosRemoval">Asbestos Removal</option>
+          <option value="poolBuilders">Pool Builders</option>
+          <option value="kitchenRenovations">Kitchen Renovations</option>
+          <option value="garageDoorRepairs">Garage Door Repairs</option>
+          <option value="airConditioning">Air Conditioning Installation</option>
+        </select>
+      </div>
+      <div class="ds-field">
+        <label>Min. Monthly Rent</label>
+        <select disabled style="opacity:.55;cursor:not-allowed">
+          <option>$500+ / month</option>
+        </select>
+      </div>
+      <button class="ds-btn primary" id="ds-scan-btn">Scan Domains</button>
+      <button class="ds-btn secondary" id="ds-refresh-btn">↺ Refresh</button>
+    </div>
+
+    <!-- DEMO NOTICE -->
+    <div class="ds-demo-notice" id="ds-demo-notice">
+      <span class="icon">⚡</span>
+      <div>
+        <p>Demo mode — connect a GoDaddy API backend to enable live availability checks.</p>
+        <p class="connect-hint">POST /api/check-domains · { "domains": [...] } · returns { "results": [{ "domain": "...", "available": true }] }</p>
+      </div>
+    </div>
+
+    <!-- STALE WARNING -->
+    <div class="ds-stale" id="ds-stale">⚠ Availability data may be stale. Refresh before buying.</div>
+
+    <!-- SHORTLIST -->
+    <div class="ds-shortlist-wrap" id="ds-shortlist-wrap">
+      <div class="ds-shortlist-head">
+        <h3>⭐ Your Shortlist</h3>
+        <div style="display:flex;gap:10px;align-items:center">
+          <span class="count" id="ds-sl-count">0 domains</span>
+          <button class="ds-btn secondary" id="ds-clear-sl" style="padding:7px 13px;font-size:12px">Clear</button>
+        </div>
+      </div>
+      <div id="ds-sl-body">
+        <div class="ds-shortlist-empty" id="ds-sl-empty">No domains shortlisted yet. Hit <b style="color:var(--amber)">+ Shortlist</b> on any result below.</div>
+        <div class="ds-shortlist-items" id="ds-sl-items"></div>
+      </div>
+    </div>
+
+    <!-- STATS BAR -->
+    <div class="ds-stats" id="ds-stats" style="display:none">
+      <span class="ds-stat">Scanned: <b id="ds-total-scanned">0</b></span>
+      <span class="ds-stat hi">Available: <b id="ds-total-avail">0</b></span>
+      <span class="ds-stat">Niches: <b id="ds-total-niches">0</b></span>
+      <span class="ds-timestamp" id="ds-timestamp"></span>
+    </div>
+
+    <!-- LOADING -->
+    <div class="ds-loading" id="ds-loading">
+      <div class="spinner"></div>
+      <p>Scanning .com.au availability...</p>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div class="ds-empty" id="ds-empty">
+      <div class="ico">🔍</div>
+      <h3>No available domains found</h3>
+      <p>Try a different city, niche, or refresh the scan. Only .com.au city-based domains with $500+/month potential are shown.</p>
+    </div>
+
+    <!-- RESULTS GRID -->
+    <div class="ds-results" id="ds-results"></div>
+
+  </div>
+</div><!-- /page-scout -->
+
+<!-- ===================== CHECKLIST PAGE ===================== -->
+<div class="page" id="page-checklist">
+
+  <div id="cl-hero">
+    <div class="wrap">
+      <h1>Rank &amp; Rent<br><span class="am">Simple Checklist</span></h1>
+      <p>Twelve steps from idea to income. Tap each item to cross it off. Your progress saves automatically.</p>
+    </div>
+  </div>
+
+  <div class="cl-progress-wrap">
+    <div class="cl-progress-bar-track"><div class="cl-progress-bar-fill" id="cl-bar"></div></div>
+    <div class="cl-progress-info">
+      <div><span class="cl-progress-pct" id="cl-pct">0%</span><br><span class="cl-progress-label">complete — <span id="cl-fraction">0 / 0</span> tasks done</span></div>
+      <button class="cl-reset" id="cl-reset-btn" title="Reset all checkboxes">↺ Reset</button>
+    </div>
+  </div>
+
+  <div class="cl-grid" id="cl-grid">
+
+    <!-- 1 -->
+    <div class="cl-section" data-sec="1">
+      <div class="cl-sec-head">
+        <div class="cl-sec-num">1</div>
+        <div><p class="cl-sec-title">Pick the Opportunity</p><p class="cl-sec-count"></p></div>
+      </div>
+      <div class="cl-note"><b>Example:</b> Service: Mobile roadworthy certificates · Location: Logan / Beenleigh · Keyword: mobile roadworthy Logan</div>
+      <ul class="cl-items">
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Choose one service niche</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Choose one main location</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Search Google for the main keyword</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Check if the competition looks weak</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Confirm the service is worth good money</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Choose the first website idea</span></li>
+      </ul>
+    </div>
+
+    <!-- 2 -->
+    <div class="cl-section" data-sec="2">
+      <div class="cl-sec-head">
+        <div class="cl-sec-num">2</div>
+        <div><p class="cl-sec-title">Buy the Domain</p><p class="cl-sec-count"></p></div>
+      </div>
+      <ul class="cl-items">
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Choose a clear domain name</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Buy the domain</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Connect it to hosting</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Create a folder / project for the website</span></li>
+      </ul>
+    </div>
+
+    <!-- 3 -->
+    <div class="cl-section" data-sec="3">
+      <div class="cl-sec-head">
+        <div class="cl-sec-num">3</div>
+        <div><p class="cl-sec-title">Build the Website</p><p class="cl-sec-count"></p></div>
+      </div>
+      <ul class="cl-items">
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Build homepage</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Build main service page</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Build 2–3 suburb / location pages</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Build pricing / cost page</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Build FAQ page</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Build contact / request-a-quote page</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Build thank-you page</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Add call button</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Add enquiry form</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Make sure it works on mobile</span></li>
+      </ul>
+    </div>
+
+    <!-- 4 -->
+    <div class="cl-section" data-sec="4">
+      <div class="cl-sec-head">
+        <div class="cl-sec-num">4</div>
+        <div><p class="cl-sec-title">Add Tracking</p><p class="cl-sec-count"></p></div>
+      </div>
+      <ul class="cl-items">
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Set up Google Search Console</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Set up Google Analytics 4</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Set up Google Tag Manager</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Track phone button clicks</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Track form submissions</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Track booking / contact button clicks</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Create Google Sheet lead tracker</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Test all tracking works</span></li>
+      </ul>
+    </div>
+
+    <!-- 5 -->
+    <div class="cl-section" data-sec="5">
+      <div class="cl-sec-head">
+        <div class="cl-sec-num">5</div>
+        <div><p class="cl-sec-title">Publish the Site</p><p class="cl-sec-count"></p></div>
+      </div>
+      <ul class="cl-items">
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Publish website</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Submit sitemap to Google Search Console</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Request indexing for homepage</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Request indexing for main pages</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Test all links</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Test form submission</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Test phone button</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Test mobile layout</span></li>
+      </ul>
+    </div>
+
+    <!-- 6 -->
+    <div class="cl-section" data-sec="6">
+      <div class="cl-sec-head">
+        <div class="cl-sec-num">6</div>
+        <div><p class="cl-sec-title">Monitor Weekly</p><p class="cl-sec-count"></p></div>
+      </div>
+      <div class="cl-note">Check these every week, every site.</div>
+      <ul class="cl-items">
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Google impressions</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Google clicks</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Average position</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Top search queries</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Top pages</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Website visitors</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Phone clicks</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Form submissions</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Leads added to spreadsheet</span></li>
+      </ul>
+    </div>
+
+    <!-- 7 -->
+    <div class="cl-section" data-sec="7">
+      <div class="cl-sec-head">
+        <div class="cl-sec-num">7</div>
+        <div><p class="cl-sec-title">Improve the Site</p><p class="cl-sec-count"></p></div>
+      </div>
+      <ul class="cl-items">
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Improve pages getting impressions</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Improve titles if clicks are low</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Improve call buttons if leads are low</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Add FAQs based on search queries</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Add new suburb pages if Google shows demand</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Add internal links between pages</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Make the contact form easier to use</span></li>
+      </ul>
+    </div>
+
+    <!-- 8 -->
+    <div class="cl-section" data-sec="8">
+      <div class="cl-sec-head">
+        <div class="cl-sec-num">8</div>
+        <div><p class="cl-sec-title">Look for Proof</p><p class="cl-sec-count"></p></div>
+      </div>
+      <div class="cl-note">The site is ready for outreach when it has at least some of these.</div>
+      <ul class="cl-items">
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Impressions</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Clicks</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Phone clicks</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Form submissions</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Search queries showing in Search Console</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">At least some sign of local demand</span></li>
+      </ul>
+    </div>
+
+    <!-- 9 -->
+    <div class="cl-section" data-sec="9">
+      <div class="cl-sec-head">
+        <div class="cl-sec-num">9</div>
+        <div><p class="cl-sec-title">Contact Businesses</p><p class="cl-sec-count"></p></div>
+      </div>
+      <ul class="cl-items">
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Make a list of 20 local businesses</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Message 5–10 businesses per day</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Offer exclusive access to the leads</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Show screenshots or dashboard proof</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Offer a 14-day trial if needed</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Choose one renter</span></li>
+      </ul>
+    </div>
+
+    <!-- 10 -->
+    <div class="cl-section" data-sec="10">
+      <div class="cl-sec-head">
+        <div class="cl-sec-num">10</div>
+        <div><p class="cl-sec-title">Rent the Leads</p><p class="cl-sec-count"></p></div>
+      </div>
+      <ul class="cl-items">
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Agree on monthly price</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Set payment method</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Route calls to the renter</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Route forms to the renter</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Keep ownership of the domain</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Keep ownership of the website</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Keep tracking access</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Record all leads</span></li>
+      </ul>
+    </div>
+
+    <!-- 11 -->
+    <div class="cl-section" data-sec="11">
+      <div class="cl-sec-head">
+        <div class="cl-sec-num">11</div>
+        <div><p class="cl-sec-title">Report Monthly</p><p class="cl-sec-count"></p></div>
+      </div>
+      <div class="cl-note">Each month, send the renter a short report covering:</div>
+      <ul class="cl-items">
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Total impressions</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Total clicks</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Total phone clicks</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Total form enquiries</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Total leads</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Top keywords</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Top pages</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">What you will improve next</span></li>
+      </ul>
+    </div>
+
+    <!-- 12 -->
+    <div class="cl-section" data-sec="12">
+      <div class="cl-sec-head">
+        <div class="cl-sec-num">12</div>
+        <div><p class="cl-sec-title">Repeat</p><p class="cl-sec-count"></p></div>
+      </div>
+      <ul class="cl-items">
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Keep improving the first site</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Build the second site</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Install tracking</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Monitor results</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Rent leads</span></li>
+        <li class="cl-item" tabindex="0"><span class="cl-box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="cl-text">Repeat with the next niche</span></li>
+      </ul>
+    </div>
+
+  </div><!-- /cl-grid -->
+
+  <div class="cl-sites">
+    <p class="cl-sites-head">Suggested site order</p>
+    <div class="cl-sites-grid">
+      <div class="cl-site"><div class="sn">Site 1 — Start here</div><h4>Mobile Roadworthy Certificates Logan / Beenleigh</h4></div>
+      <div class="cl-site"><div class="sn">Site 2</div><h4>Termite Treatment Logan / Brisbane Southside</h4></div>
+      <div class="cl-site"><div class="sn">Site 3</div><h4>Bathroom Renovations Bundaberg</h4></div>
+      <div class="cl-site"><div class="sn">Site 4</div><h4>Roof Restoration Bundaberg</h4></div>
+    </div>
+  </div>
+
+</div><!-- /page-checklist -->
+
+<!-- ===================== PLAYBOOK PAGE ===================== -->
+<div class="page active" id="page-playbook">
+
+<nav id="dotnav" aria-label="Section navigation">
+  <a href="#top" data-sec="top"><span class="lab">Start</span></a>
+  <a href="#model" data-sec="model"><span class="lab">The model</span></a>
+  <a href="#journey" data-sec="journey"><span class="lab">24 stages</span></a>
+  <a href="#metrics" data-sec="metrics"><span class="lab">Metrics</span></a>
+  <a href="#price" data-sec="price"><span class="lab">Pricing</span></a>
+  <a href="#thirty" data-sec="thirty"><span class="lab">First 30 days</span></a>
+  <a href="#ethics" data-sec="ethics"><span class="lab">The rules</span></a>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="band--hero" id="top">
+  <div class="wrap">
+    <div class="hero-top">
+      <span class="badge"><span class="dot"></span>FIELD MANUAL · v1</span>
+      <span>LOCAL LEAD ASSETS — QLD</span>
+    </div>
+    <div class="hero">
+      <h1>The <span class="amber">Rank&nbsp;&amp;&nbsp;Rent</span><br><span class="out">Playbook</span></h1>
+      <p class="hero-sub">Build local websites that catch people searching for a service in a suburb — then rent the incoming calls and enquiries to one real business, every month. You keep the asset. They rent the flow.</p>
+      <div class="hero-meta">
+        <span><b>24</b> stages</span>
+        <span><b>30</b>-day launch plan</span>
+        <span><b>90</b>-day portfolio goal</span>
+        <span><b>1</b> honest model</span>
+      </div>
+    </div>
+
+    <!-- VALUE CHAIN PIPELINE -->
+    <div class="pipe-card reveal">
+      <div class="ph">
+        <span class="t">The value chain — one asset</span>
+        <span class="live">● tracking live</span>
+      </div>
+      <div class="pipe" id="pipe">
+        <div class="node">
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg></div>
+          <div class="num" data-count="1840">0</div>
+          <div class="lbl">Impressions</div>
+        </div>
+        <div class="conn"></div>
+        <div class="node">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L11 19z"/></svg></div>
+          <div class="num" data-count="92">0</div>
+          <div class="lbl">Clicks</div>
+        </div>
+        <div class="conn"></div>
+        <div class="node">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 4h4l1.5 5-2.5 2a12 12 0 005 5l2-2.5 5 1.5v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg></div>
+          <div class="num" data-count="17">0</div>
+          <div class="lbl">Phone clicks</div>
+        </div>
+        <div class="conn"></div>
+        <div class="node">
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div>
+          <div class="num" data-count="9">0</div>
+          <div class="lbl">Form leads</div>
+        </div>
+        <div class="conn"></div>
+        <div class="node">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></div>
+          <div class="num" data-count="6">0</div>
+          <div class="lbl">Booked jobs</div>
+        </div>
+        <div class="conn"></div>
+        <div class="node final">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v18M8 7h6a3 3 0 010 6H9a3 3 0 000 6h7"/></svg></div>
+          <div class="num"><span data-count="500" data-prefix="$">$0</span></div>
+          <div class="lbl">Monthly rent</div>
+        </div>
+      </div>
+      <div class="pipe-note">Search visibility → interest → contact → real leads → booked work → recurring rent</div>
+    </div>
+  </div>
+</header>
+
+<hr class="rule">
+
+<!-- ===================== THE BIG IDEA ===================== -->
+<section class="band">
+  <div class="wrap">
+    <span class="eyebrow reveal">The big idea</span>
+    <h2 class="h-sec reveal">You are not building a website for a client.<br><span class="accent">You are building an asset you own.</span></h2>
+    <p class="lede reveal" data-d="1">The goal is to attract people searching for a specific service in a specific area, capture their calls and enquiries, and then rent that lead flow to one real business for a monthly fee. The business pays to receive the calls, forms, and enquiries. The website, the domain, and the data stay yours.</p>
+    <div class="grid g3" style="margin-top:34px">
+      <div class="card reveal" data-d="1"><span class="k">01 — Own</span><h3>Keep the asset</h3><p class="muted" style="font-size:15px">The domain, the website, and admin access to tracking never leave your hands. Renters come and go; the asset stays.</p></div>
+      <div class="card reveal" data-d="2"><span class="k">02 — Prove</span><h3>Show real demand</h3><p class="muted" style="font-size:15px">Build, track, and let real search data prove people want this service here — before you ask anyone to pay.</p></div>
+      <div class="card reveal" data-d="3"><span class="k">03 — Rent</span><h3>Sell access, not theory</h3><p class="muted" style="font-size:15px">When the leads are real, offer exclusive access to one provider for a monthly fee. You rent flow, not promises.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CORE PRINCIPLE ===================== -->
+<section class="band band--tight">
+  <div class="wrap">
+    <span class="eyebrow lime reveal">The core principle</span>
+    <p class="statement reveal" data-d="1">Build first. <span class="li">Track</span> results. <span class="li">Prove</span> demand.<br>Then <span class="am">rent</span> the lead flow.</p>
+    <div class="cmp reveal" data-d="2" style="margin-top:34px">
+      <div class="col bad">
+        <div class="ch"><span class="g">✕</span>Never do this</div>
+        <ul>
+          <li>Promise rankings</li>
+          <li>Fake a business or use someone's number without permission</li>
+          <li>Create fake Google Business Profiles or fake reviews</li>
+          <li>Sell theory before there's proof</li>
+        </ul>
+      </div>
+      <div class="col good">
+        <div class="ch"><span class="g">✓</span>Always do this</div>
+        <ul>
+          <li>Sell access to an asset once there is proof</li>
+          <li>Use honest wording and real tracking</li>
+          <li>Get consent before routing any leads</li>
+          <li>Treat it like a portfolio — double down on winners</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== THE SIMPLE MODEL ===================== -->
+<section class="band" id="model">
+  <div class="wrap">
+    <span class="eyebrow reveal">The simple model</span>
+    <h2 class="h-sec reveal">Ten moves, on a loop.</h2>
+    <p class="lede reveal" data-d="1">Every asset follows the same path. The last step feeds the first — that's what makes it a portfolio.</p>
+    <div class="rail">
+      <div class="step reveal" data-d="1"><div class="n">1</div><p>Pick a local high-value service</p></div>
+      <div class="step reveal" data-d="1"><div class="n">2</div><p>Build a niche site for that service + area</p></div>
+      <div class="step reveal" data-d="2"><div class="n">3</div><p>Install tracking</p></div>
+      <div class="step reveal" data-d="2"><div class="n">4</div><p>Publish and index the site</p></div>
+      <div class="step reveal" data-d="3"><div class="n">5</div><p>Monitor impressions, clicks, calls, forms</p></div>
+      <div class="step reveal" data-d="1"><div class="n">6</div><p>Improve pages from real search data</p></div>
+      <div class="step reveal" data-d="2"><div class="n">7</div><p>Once it gets leads, offer one business access</p></div>
+      <div class="step reveal" data-d="2"><div class="n">8</div><p>Rent the lead flow monthly</p></div>
+      <div class="step reveal" data-d="3"><div class="n">9</div><p>Keep the website and domain</p></div>
+      <div class="step last reveal" data-d="3"><div class="n">↻</div><p>Repeat with more local lead assets</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FIRST ASSET ===================== -->
+<section class="band band--tight">
+  <div class="wrap">
+    <div class="feature reveal">
+      <div class="tag">★ Best first niche</div>
+      <h2>Mobile Roadworthy Certificates<br><span class="am">Logan / Beenleigh</span></h2>
+      <p style="color:var(--paper-2);max-width:60ch;margin:0">Simple to understand, urgent intent, customers ready to call, and a website that can stay small. It teaches the whole rank-and-rent process without the complexity of a high-end renovation niche.</p>
+      <div class="why">
+        <div class="whychip"><div class="h">Intent</div><p>Urgent — people need it now to sell or register a car.</p></div>
+        <div class="whychip"><div class="h">Booking</div><p>Handled by a simple form or a phone call.</p></div>
+        <div class="whychip"><div class="h">Competition</div><p>Often easier than renovation or solar niches.</p></div>
+      </div>
+      <div class="domains">
+        <span class="dom">loganroadworthycertificates<span class="ext">.com.au</span></span>
+        <span class="dom">mobileroadworthylogan<span class="ext">.com.au</span></span>
+        <span class="dom">beenleighroadworthy<span class="ext">.com.au</span></span>
+      </div>
+      <p class="muted" style="font-family:var(--mono);font-size:12px;margin:18px 0 0">Only buy a domain after checking the niche and area look viable.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== THE 24 STAGE JOURNEY ===================== -->
+<section class="band" id="journey">
+  <div class="wrap">
+    <span class="eyebrow reveal">The 24-stage journey</span>
+    <h2 class="h-sec reveal">From <span class="accent">idea</span> to <span class="accent">income</span>, one stage at a time.</h2>
+    <p class="lede reveal" data-d="1">Six phases carry an asset from a blank domain to recurring rent. You don't need perfect results to move forward — you need proof.</p>
+
+    <!-- PHASE 1 -->
+    <div class="phase reveal" data-d="1">
+      <div class="phase-head">
+        <div class="pn">01</div>
+        <div class="pt"><span class="e">Stages 1 – 4</span><h3>Find the opening</h3><span class="stages">Where one customer is genuinely valuable</span></div>
+      </div>
+      <div class="stagegrid">
+        <div class="stage"><span class="sn">Stage 1</span><h4>Pick the niche</h4><ul><li>Local service, high job value</li><li>Urgent need, clear suburb keywords</li><li>Businesses that already pay for leads</li></ul></div>
+        <div class="stage"><span class="sn">Stage 2</span><h4>Check the competition</h4><ul><li>Search the terms manually in Google</li><li>Look for weak, old, thin sites</li><li>Go smaller/more specific if it's strong</li></ul></div>
+        <div class="stage"><span class="sn">Stage 3</span><h4>Choose the exact target</h4><ul><li>One main service, one main area</li><li>A few nearby suburbs</li><li>High-intent customer searches</li></ul></div>
+        <div class="stage"><span class="sn">Stage 4</span><h4>Buy the domain</h4><ul><li>Service + area, or area + service</li><li>Clear and trustworthy over clever</li><li>This is a search asset, not a brand</li></ul></div>
+      </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase reveal" data-d="1">
+      <div class="phase-head">
+        <div class="pn">02</div>
+        <div class="pt"><span class="e">Stages 5 – 7</span><h3>Build the asset</h3><span class="stages">Same simple structure, every time</span></div>
+      </div>
+      <div class="stagegrid">
+        <div class="stage"><span class="sn">Stage 5</span><h4>Build the structure</h4><ul><li>Home + main service + main location</li><li>3 suburb pages, cost guide, FAQ</li><li>Contact + thank-you page</li></ul></div>
+        <div class="stage"><span class="sn">Stage 6</span><h4>Build each page properly</h4><ul><li>Service + location in title & H1</li><li>Answer real customer questions</li><li>Draft with AI, then make it genuinely helpful</li></ul></div>
+        <div class="stage"><span class="sn">Stage 7</span><h4>Add lead capture</h4><ul><li>Click-to-call button on mobile</li><li>Short request-a-quote form</li><li>Thank-you page for tracking</li></ul></div>
+      </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase reveal" data-d="1">
+      <div class="phase-head">
+        <div class="pn">03</div>
+        <div class="pt"><span class="e">Stages 8 – 11</span><h3>Wire the instruments</h3><span class="stages">If it isn't tracked, it didn't happen</span></div>
+      </div>
+      <div class="stagegrid">
+        <div class="stage"><span class="sn">Stage 8</span><h4>Install tracking</h4><ul><li>Search Console + GA4 + Tag Manager</li><li>Phone-click & form tracking</li><li>A lead log in Sheets or Airtable</li></ul></div>
+        <div class="stage"><span class="sn">Stage 9</span><h4>Track the right metrics</h4><ul><li>Impressions, clicks, CTR, position</li><li>Top queries and top pages</li><li>Indexed pages</li></ul></div>
+        <div class="stage"><span class="sn">Stage 10</span><h4>Track behaviour</h4><ul><li>phone_click, form_start, generate_lead</li><li>booking_click, outbound_click</li><li>Phones & forms matter most</li></ul></div>
+        <div class="stage"><span class="sn">Stage 11</span><h4>Track leads in a sheet</h4><ul><li>Website overview tab</li><li>Weekly SEO + lead log tabs</li><li>Renter tracking tab</li></ul></div>
+      </div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="phase reveal" data-d="1">
+      <div class="phase-head">
+        <div class="pn">04</div>
+        <div class="pt"><span class="e">Stages 12 – 17</span><h3>Launch &amp; grow</h3><span class="stages">Ship it, then let the data lead</span></div>
+      </div>
+      <div class="stagegrid">
+        <div class="stage"><span class="sn">Stage 12</span><h4>Publish the site</h4><ul><li>Test every page, button and form</li><li>Confirm GA4 + tags fire</li><li>Then go live</li></ul></div>
+        <div class="stage"><span class="sn">Stage 13</span><h4>Index the site</h4><ul><li>Submit the sitemap</li><li>Request indexing for key pages</li><li>Be patient — it takes time</li></ul></div>
+        <div class="stage"><span class="sn">Stage 14</span><h4>Monitor weekly</h4><ul><li>Are impressions rising?</li><li>Which queries & pages show up?</li><li>Any clicks, calls or leads?</li></ul></div>
+        <div class="stage"><span class="sn">Stage 15</span><h4>Improve from data</h4><ul><li>Don't change randomly — use signals</li><li>Build pages for queries you're shown for</li><li>Push pages stuck at position 8–20</li></ul></div>
+        <div class="stage"><span class="sn">Stage 16</span><h4>Build basic authority</h4><ul><li>Real profiles, legit citations</li><li>Helpful articles & internal links</li><li>No spam links, no fake reviews</li></ul></div>
+        <div class="stage"><span class="sn">Stage 17</span><h4>Decide readiness</h4><ul><li>Regular impressions or clicks</li><li>Phone clicks or form submissions</li><li>A clear growth trend, a few real leads</li></ul></div>
+      </div>
+    </div>
+
+    <!-- PHASE 5 -->
+    <div class="phase reveal" data-d="1">
+      <div class="phase-head">
+        <div class="pn">05</div>
+        <div class="pt"><span class="e">Stages 18 – 23</span><h3>Rent the flow</h3><span class="stages">Turn proof into recurring income</span></div>
+      </div>
+      <div class="stagegrid">
+        <div class="stage"><span class="sn">Stage 18</span><h4>Outreach to businesses</h4><ul><li>"I own a local lead asset"</li><li>Offer exclusive enquiries to one provider</li><li>Stronger than "I can do SEO"</li></ul></div>
+        <div class="stage"><span class="sn">Stage 19</span><h4>Offer structure</h4><ul><li>Starter $300/mo while it grows</li><li>Standard $500–$1,000/mo</li><li>14-day trial to cut friction</li></ul></div>
+        <div class="stage"><span class="sn">Stage 20</span><h4>Route leads to the renter</h4><ul><li>Forms & calls go to the business</li><li>Keep a copy of every submission</li><li>Never give away the domain</li></ul></div>
+        <div class="stage"><span class="sn">Stage 21</span><h4>Monthly report</h4><ul><li>Impressions, clicks, calls, forms</li><li>Top keyword, suburb, page</li><li>Keep it short and clear</li></ul></div>
+        <div class="stage"><span class="sn">Stage 22</span><h4>Raise rent on value</h4><ul><li>More leads → higher fee</li><li>Only raise with proof of value</li><li>High-ticket booked jobs = most upside</li></ul></div>
+        <div class="stage"><span class="sn">Stage 23</span><h4>Replace bad renters</h4><ul><li>Ignores calls or wastes leads → swap</li><li>Treats customers badly → swap</li><li>The asset is yours; renters are replaceable</li></ul></div>
+      </div>
+    </div>
+
+    <!-- PHASE 6 -->
+    <div class="phase reveal" data-d="1">
+      <div class="phase-head">
+        <div class="pn">06</div>
+        <div class="pt"><span class="e">Stage 24</span><h3>Build the portfolio</h3><span class="stages">Don't wait for perfection</span></div>
+      </div>
+      <div class="stagegrid">
+        <div class="stage"><span class="sn">Asset 1</span><h4>Roadworthy — Logan</h4><ul><li>The easy first test</li></ul></div>
+        <div class="stage"><span class="sn">Asset 2</span><h4>Termite Treatment</h4><ul><li>Urgent, high-value</li></ul></div>
+        <div class="stage"><span class="sn">Asset 3</span><h4>Bathroom Reno — Bundaberg</h4><ul><li>High-ticket renovation</li></ul></div>
+        <div class="stage"><span class="sn">Asset 4</span><h4>Roof Restoration — Bundaberg</h4><ul><li>Strong trade service</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== PICKING A WINNER ===================== -->
+<section class="band">
+  <div class="wrap">
+    <span class="eyebrow reveal">Picking a winner</span>
+    <h2 class="h-sec reveal">Choose a service where <span class="accent">one customer is worth a lot.</span></h2>
+    <p class="lede reveal" data-d="1">Avoid low-value niches where a customer is only worth a little. The best assets share the same DNA.</p>
+    <div class="grid g4 reveal" data-d="2" style="margin-top:30px">
+      <div class="card"><span class="k">Urgent</span><p class="muted" style="font-size:15px;margin:0">The customer needs it now.</p></div>
+      <div class="card"><span class="k">High value</span><p class="muted" style="font-size:15px;margin:0">One job is worth real money.</p></div>
+      <div class="card"><span class="k">Demand</span><p class="muted" style="font-size:15px;margin:0">People are already searching locally.</p></div>
+      <div class="card"><span class="k">Weak rivals</span><p class="muted" style="font-size:15px;margin:0">Existing sites are thin or dated.</p></div>
+    </div>
+    <p class="sub-h reveal" data-d="1">Starter niches worth testing</p>
+    <div class="reveal" data-d="2">
+      <span class="pill">Mobile roadworthy certificates</span>
+      <span class="pill">Mobile mechanic</span>
+      <span class="pill">Termite treatment</span>
+      <span class="pill">Roof restoration</span>
+      <span class="pill">Bathroom renovations</span>
+      <span class="pill">Solar installation</span>
+      <span class="pill">NDIS support coordination</span>
+      <span class="pill">Tree removal</span>
+      <span class="pill">Bond cleaning</span>
+      <span class="pill">Pressure washing</span>
+      <span class="pill">Pest control</span>
+      <span class="pill">Concrete driveways</span>
+      <span class="pill">Car detailing</span>
+      <span class="pill">Garage door repairs</span>
+      <span class="pill">Air conditioning installation</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== READING THE COMPETITION ===================== -->
+<section class="band band--tight">
+  <div class="wrap">
+    <span class="eyebrow reveal">Reading the competition</span>
+    <h2 class="h-sec reveal">Before you build, <span class="accent">search like a customer.</span></h2>
+    <p class="lede reveal" data-d="1">Open Google and run the real searches a customer would. You're looking for cracks, not perfection.</p>
+    <div class="cmp reveal" data-d="2">
+      <div class="col good">
+        <div class="ch"><span class="g">✓</span>Good signs — there's room</div>
+        <ul>
+          <li>Old-looking websites &amp; poor page titles</li>
+          <li>Thin content, few suburb-specific pages</li>
+          <li>Directories ranking instead of strong businesses</li>
+          <li>Slow sites, confusing contact options</li>
+          <li>No pricing guidance, no helpful FAQs</li>
+        </ul>
+      </div>
+      <div class="col bad">
+        <div class="ch"><span class="g">✕</span>Bad signs — go more specific</div>
+        <ul>
+          <li>Strong businesses dominate every result</li>
+          <li>Big brands and high-authority sites everywhere</li>
+          <li>Many strong, well-optimised SEO pages</li>
+          <li>Heavy paid-ad competition</li>
+          <li>The results already look excellent</li>
+        </ul>
+      </div>
+    </div>
+    <p class="sub-h reveal" data-d="1">Too broad vs. winnable</p>
+    <div class="kwflip reveal" data-d="2">
+      <div class="kwbox tooBroad">
+        <div class="lab">✕ Too broad</div>
+        <code>plumber Brisbane</code>
+        <code>bathroom renovations Brisbane</code>
+        <code>electrician Gold Coast</code>
+      </div>
+      <div class="kwbox better">
+        <div class="lab">✓ Better — specific intent</div>
+        <code>blocked toilet Beenleigh</code>
+        <code>emergency plumber Eagleby</code>
+        <code>hot water repair Loganholme</code>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== PAGES THAT RANK ===================== -->
+<section class="band">
+  <div class="wrap">
+    <span class="eyebrow lime reveal">Pages that rank</span>
+    <h2 class="h-sec reveal">One asset, one simple structure.</h2>
+    <p class="lede reveal" data-d="1">Don't build a general site. Build one specific asset that targets one service, one main area, and several nearby suburbs.</p>
+    <div class="grid g2" style="margin-top:32px">
+      <div class="card reveal" data-d="1">
+        <span class="k">The 10 core pages</span>
+        <ul>
+          <li>Home page</li>
+          <li>Main service page</li>
+          <li>Main location page</li>
+          <li>Suburb pages 1, 2 &amp; 3</li>
+          <li>Cost / pricing guide</li>
+          <li>FAQ page</li>
+          <li>Contact / request-a-quote page</li>
+          <li>Thank-you page</li>
+        </ul>
+      </div>
+      <div class="card reveal" data-d="2">
+        <span class="k">What every page needs</span>
+        <ul>
+          <li>Clear title &amp; H1 with service + location</li>
+          <li>Short intro: who it's for, when they need it</li>
+          <li>The process &amp; the service areas</li>
+          <li>An FAQ section answering real questions</li>
+          <li>Strong CTA, click-to-call &amp; quote form</li>
+          <li>Internal links to related pages</li>
+        </ul>
+      </div>
+    </div>
+    <p class="muted reveal" data-d="1" style="font-family:var(--mono);font-size:12.5px;margin-top:22px">Use AI to draft, then improve it so it genuinely helps. Good content answers: How much does it cost? How fast can I book? Do you come to me? What suburbs are covered? What if the vehicle fails?</p>
+  </div>
+</section>
+
+<!-- ===================== METRICS DASHBOARD ===================== -->
+<section class="band" id="metrics">
+  <div class="wrap">
+    <span class="eyebrow reveal">The metrics that matter</span>
+    <h2 class="h-sec reveal">Read the signals. <span class="accent">Then act.</span></h2>
+    <p class="lede reveal" data-d="1">Search Console tells you what Google is doing with your site. Each number points to a specific next move.</p>
+    <div class="grid g3" style="margin-top:30px">
+      <div class="metric reveal" data-d="1">
+        <div class="top"><span class="name">Impressions</span>
+          <svg class="spark" viewBox="0 0 64 26"><path class="area" d="M0 22 L13 20 L26 16 L39 12 L52 7 L64 4 L64 26 L0 26 Z"/><path d="M0 22 L13 20 L26 16 L39 12 L52 7 L64 4"/></svg></div>
+        <h4>Is Google testing you?</h4><p>How often your site appears in search. Rising impressions mean Google is showing your pages.</p>
+      </div>
+      <div class="metric reveal" data-d="2">
+        <div class="top"><span class="name">Clicks</span>
+          <svg class="spark" viewBox="0 0 64 26"><path class="area" d="M0 23 L13 21 L26 18 L39 13 L52 10 L64 6 L64 26 L0 26 Z"/><path d="M0 23 L13 21 L26 18 L39 13 L52 10 L64 6"/></svg></div>
+        <h4>Are searchers interested?</h4><p>How many people clicked through to your site. Interest you can build leads on.</p>
+      </div>
+      <div class="metric reveal" data-d="3">
+        <div class="top"><span class="name">CTR</span>
+          <svg class="spark" viewBox="0 0 64 26"><path class="area" d="M0 18 L13 14 L26 16 L39 11 L52 13 L64 8 L64 26 L0 26 Z"/><path d="M0 18 L13 14 L26 16 L39 11 L52 13 L64 8"/></svg></div>
+        <h4>Is your title attractive?</h4><p>Click-through rate. Low CTR with high impressions = fix your titles and descriptions.</p>
+      </div>
+      <div class="metric reveal" data-d="1">
+        <div class="top"><span class="name">Avg. position</span>
+          <svg class="spark" viewBox="0 0 64 26"><path class="area" d="M0 6 L13 9 L26 11 L39 14 L52 18 L64 21 L64 26 L0 26 Z"/><path d="M0 6 L13 9 L26 11 L39 14 L52 18 L64 21"/></svg></div>
+        <h4>Are you climbing?</h4><p>Where you rank on average. A page at 8–20 is an opportunity to push higher.</p>
+      </div>
+      <div class="metric reveal" data-d="2">
+        <div class="top"><span class="name">Top queries</span>
+          <svg class="spark" viewBox="0 0 64 26"><path class="area" d="M0 20 L13 17 L26 19 L39 12 L52 14 L64 9 L64 26 L0 26 Z"/><path d="M0 20 L13 17 L26 19 L39 12 L52 14 L64 9"/></svg></div>
+        <h4>What to build next?</h4><p>The keywords you're shown for. Each new query is a page or section to create.</p>
+      </div>
+      <div class="metric reveal" data-d="3">
+        <div class="top"><span class="name">Indexed pages</span>
+          <svg class="spark" viewBox="0 0 64 26"><path class="area" d="M0 22 L13 22 L26 16 L39 16 L52 9 L64 9 L64 26 L0 26 Z"/><path d="M0 22 L13 22 L26 16 L39 16 L52 9 L64 9"/></svg></div>
+        <h4>Is Google seeing it all?</h4><p>How many pages are in the index. Missing pages? Resubmit the sitemap and request indexing.</p>
+      </div>
+    </div>
+
+    <p class="sub-h reveal" data-d="1">GA4 events to track — the most important first</p>
+    <div class="eventrow reveal" data-d="2">
+      <span class="ev star">phone_click</span>
+      <span class="ev star">generate_lead</span>
+      <span class="ev star">booking_click</span>
+      <span class="ev">form_start</span>
+      <span class="ev">email_click</span>
+      <span class="ev">outbound_click</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LEAD TRACKER TABS ===================== -->
+<section class="band band--tight">
+  <div class="wrap">
+    <span class="eyebrow reveal">The lead tracker</span>
+    <h2 class="h-sec reveal">One sheet. <span class="accent">Four tabs.</span> All the truth.</h2>
+    <p class="lede reveal" data-d="1">Call it <b style="color:var(--paper)">Rank and Rent Lead Tracker</b>. Tap each tab to see what it holds.</p>
+    <div class="reveal" data-d="2">
+      <div class="tabs" role="tablist">
+        <div class="tab active" data-tab="t1" role="tab">① Website Overview</div>
+        <div class="tab" data-tab="t2" role="tab">② Weekly SEO</div>
+        <div class="tab" data-tab="t3" role="tab">③ Lead Log</div>
+        <div class="tab" data-tab="t4" role="tab">④ Renter Tracking</div>
+      </div>
+      <div class="tabpane" id="t1">
+        <h4>Website Overview</h4>
+        <p class="desc">The bird's-eye view of every asset you own.</p>
+        <div class="cols">
+          <span class="colchip">Website name</span><span class="colchip">Domain</span><span class="colchip">Niche</span><span class="colchip">Main area</span><span class="colchip">Launch date</span><span class="colchip">Main keyword</span><span class="colchip">Status</span><span class="colchip">Monthly rent target</span><span class="colchip">Current renter</span><span class="colchip">Notes</span>
+        </div>
+      </div>
+      <div class="tabpane" id="t2" hidden>
+        <h4>Weekly SEO Tracking</h4>
+        <p class="desc">The growth diary. Fill it every Monday.</p>
+        <div class="cols">
+          <span class="colchip">Week</span><span class="colchip">Impressions</span><span class="colchip">Clicks</span><span class="colchip">CTR</span><span class="colchip">Avg. position</span><span class="colchip">Top query</span><span class="colchip">Top page</span><span class="colchip">Pages indexed</span><span class="colchip">Notes</span><span class="colchip">Next action</span>
+        </div>
+      </div>
+      <div class="tabpane" id="t3" hidden>
+        <h4>Lead Log</h4>
+        <p class="desc">Every enquiry, where it came from, and what happened.</p>
+        <div class="cols">
+          <span class="colchip">Date</span><span class="colchip">Name</span><span class="colchip">Phone</span><span class="colchip">Email</span><span class="colchip">Suburb</span><span class="colchip">Service</span><span class="colchip">Source</span><span class="colchip">Landing page</span><span class="colchip">Form or call</span><span class="colchip">Sent to</span><span class="colchip">Lead quality</span><span class="colchip">Outcome</span>
+        </div>
+        <div class="qualkey">
+          <span class="qk b">Bad lead</span><span class="qk u">Unclear lead</span><span class="qk q">Qualified lead</span><span class="qk bk">Booked job</span><span class="qk u">Unknown</span>
+        </div>
+      </div>
+      <div class="tabpane" id="t4" hidden>
+        <h4>Renter Tracking</h4>
+        <p class="desc">Who's renting what, and whether they've paid.</p>
+        <div class="cols">
+          <span class="colchip">Business name</span><span class="colchip">Contact person</span><span class="colchip">Phone</span><span class="colchip">Email</span><span class="colchip">Niche</span><span class="colchip">Area</span><span class="colchip">Monthly fee</span><span class="colchip">Start date</span><span class="colchip">Payment status</span><span class="colchip">Leads sent this month</span><span class="colchip">Notes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== PRICING ===================== -->
+<section class="band" id="price">
+  <div class="wrap">
+    <span class="eyebrow reveal">Price the asset</span>
+    <h2 class="h-sec reveal">Simple offers. <span class="accent">Exclusive access.</span></h2>
+    <p class="lede reveal" data-d="1">One provider, one fee, full lead flow. Price for where the asset is today — then raise it as the leads grow.</p>
+    <div class="tiers">
+      <div class="tier reveal" data-d="1">
+        <div class="tn">Starter</div>
+        <div class="price">$300<span class="per"> /mo</span></div>
+        <p class="for">For a new site with early traction. Exclusive access while it grows.</p>
+      </div>
+      <div class="tier feat reveal" data-d="2">
+        <div class="badge">Most common</div>
+        <div class="tn">Standard</div>
+        <div class="price">$500–$1k<span class="per"> /mo</span></div>
+        <p class="for">For a site producing regular enquiries that a business can act on.</p>
+      </div>
+      <div class="tier reveal" data-d="3">
+        <div class="tn">Premium</div>
+        <div class="price">$1k–$3k<span class="per"> /mo</span></div>
+        <p class="for">For high-value niches delivering qualified, ready-to-book leads.</p>
+      </div>
+    </div>
+    <div class="trial reveal" data-d="2">
+      <span class="ti">Hesitant? Offer a trial</span>
+      <p>"Try the leads for 14 days. If they're useful, keep exclusive access for $500/month." Friction drops, the proof does the selling.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RENT LADDER ===================== -->
+<section class="band band--tight">
+  <div class="wrap">
+    <span class="eyebrow lime reveal">The rent ladder</span>
+    <h2 class="h-sec reveal">More leads, <span class="accent">more rent.</span></h2>
+    <p class="lede reveal" data-d="1">Only climb a rung when there's proof of value. The bars below fill as you scroll.</p>
+    <div class="ladder reveal" data-d="2" id="ladder">
+      <div class="lrow"><span class="leads">3–5 leads / mo</span><div class="bartrack"><div class="barfill" data-w="22"></div></div><span class="rent">$300–$500</span></div>
+      <div class="lrow"><span class="leads">6–15 leads / mo</span><div class="bartrack"><div class="barfill" data-w="45"></div></div><span class="rent">$500–$1,000</span></div>
+      <div class="lrow"><span class="leads">15–30 leads / mo</span><div class="bartrack"><div class="barfill" data-w="72"></div></div><span class="rent">$1,000–$2,000</span></div>
+      <div class="lrow"><span class="leads">High-ticket booked jobs</span><div class="bartrack"><div class="barfill" data-w="100"></div></div><span class="rent">$2,000+</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MONTHLY REPORT ===================== -->
+<section class="band band--tight">
+  <div class="wrap">
+    <span class="eyebrow reveal">A monthly report</span>
+    <h2 class="h-sec reveal">What the renter actually wants to see.</h2>
+    <p class="lede reveal" data-d="1">Did the site bring attention? Did people click? Did leads come through? Is it improving? Keep it this short.</p>
+    <div class="report reveal" data-d="2">
+      <div class="rh">
+        <span class="site">Mobile Roadworthy Certificates Logan</span>
+        <span class="mo">Report · July</span>
+      </div>
+      <div class="counts">
+        <div class="count"><div class="v" data-count="1840">0</div><div class="l">Impressions</div></div>
+        <div class="count"><div class="v" data-count="92">0</div><div class="l">Clicks</div></div>
+        <div class="count"><div class="v" data-count="17">0</div><div class="l">Phone clicks</div></div>
+        <div class="count"><div class="v" data-count="9">0</div><div class="l">Form enquiries</div></div>
+        <div class="count hi"><div class="v" data-count="26">0</div><div class="l">Total lead actions</div></div>
+      </div>
+      <div class="foot">
+        <span class="pill amber">Top keyword · mobile roadworthy Logan</span>
+        <span class="pill">Top suburb · Beenleigh</span>
+        <span class="pill">Best page · Roadworthy Certificate Logan</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== FIRST 30 DAYS ===================== -->
+<section class="band" id="thirty">
+  <div class="wrap">
+    <span class="eyebrow reveal">The first 30 days</span>
+    <h2 class="h-sec reveal">Build it. Wire it. Improve it. <span class="accent">Read it.</span></h2>
+    <p class="lede reveal" data-d="1">A four-week sprint to launch your first asset — Mobile Roadworthy Certificates, Logan / Beenleigh.</p>
+    <div class="timeline">
+      <div class="week reveal" data-d="1"><span class="wk">Week 1</span><h4>Build the site</h4><ul><li>Buy the domain</li><li>Home + Logan + Beenleigh + Eagleby</li><li>Cost, FAQ &amp; contact pages</li><li>Form, click-to-call, thank-you</li></ul></div>
+      <div class="week reveal" data-d="2"><span class="wk">Week 2</span><h4>Install tracking</h4><ul><li>Search Console + GA4 + GTM</li><li>Phone &amp; form tracking</li><li>Lead-log sheet + sitemap</li><li>Publish &amp; index</li></ul></div>
+      <div class="week reveal" data-d="3"><span class="wk">Week 3</span><h4>Improve content</h4><ul><li>More FAQs &amp; internal links</li><li>Better titles &amp; service-area copy</li><li>Pricing guidance</li><li>Start watching Search Console</li></ul></div>
+      <div class="week reveal" data-d="4"><span class="wk">Week 4</span><h4>Review results</h4><ul><li>Pages indexed? Impressions showing?</li><li>Which queries &amp; pages get attention?</li><li>Any clicks or leads?</li><li>Proof? Start soft outreach</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 90 DAY GOAL ===================== -->
+<section class="band band--tight">
+  <div class="wrap">
+    <span class="eyebrow lime reveal">The 90-day goal</span>
+    <h2 class="h-sec reveal">Tick them off. <span class="accent">Watch it fill.</span></h2>
+    <p class="lede reveal" data-d="1">Where you want to be after three months. Tap each goal you've hit.</p>
+    <div class="goalwrap reveal" data-d="2">
+      <div class="ring">
+        <svg width="200" height="200" viewBox="0 0 200 200">
+          <defs><linearGradient id="ggrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A9DB45"/><stop offset="1" stop-color="#F4A93B"/></linearGradient></defs>
+          <circle class="bg" cx="100" cy="100" r="85"/>
+          <circle class="fg" id="ringfg" cx="100" cy="100" r="85"/>
+        </svg>
+        <div class="pct"><b id="ringpct">0%</b><span>complete</span></div>
+      </div>
+      <ul class="checks" id="checks">
+        <li><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">4–8 rank-and-rent sites live</span></li>
+        <li><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">Tracking installed on every site</span></li>
+        <li><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">Weekly SEO records for every site</span></li>
+        <li><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">At least 1 site getting impressions / clicks</span></li>
+        <li><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">At least 1 site ready for renter outreach</span></li>
+        <li><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">A reusable website template + tracking dashboard</span></li>
+        <li><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">A clear lead-log system + repeatable outreach message</span></li>
+        <li><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">First renter trial or paid renter secured</span></li>
+      </ul>
+    </div>
+    <p class="goalhint">Tap a goal to mark it done — the ring fills as you go.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== WEEKLY RHYTHM ===================== -->
+<section class="band">
+  <div class="wrap">
+    <span class="eyebrow reveal">Your weekly rhythm</span>
+    <h2 class="h-sec reveal">Three days. <span class="accent">A repeatable beat.</span></h2>
+    <p class="lede reveal" data-d="1">Rank-and-rent rewards consistency over intensity. Same rhythm, every week, across the portfolio.</p>
+    <div class="rhythm">
+      <div class="day reveal" data-d="1">
+        <div class="dh"><span class="badge">MON</span><h4>Measure</h4></div>
+        <ol>
+          <li>Check Search Console</li>
+          <li>Record impressions, clicks, CTR, position</li>
+          <li>Check top queries &amp; pages</li>
+          <li>Check GA4 events &amp; phone clicks</li>
+          <li>Update the lead sheet</li>
+          <li>Pick one improvement per site</li>
+        </ol>
+      </div>
+      <div class="day reveal" data-d="2">
+        <div class="dh"><span class="badge">WED</span><h4>Improve</h4></div>
+        <ol>
+          <li>Improve one page</li>
+          <li>Add one FAQ section</li>
+          <li>Add one internal link</li>
+          <li>Improve one CTA</li>
+          <li>Create one new page if demand shows</li>
+        </ol>
+      </div>
+      <div class="day reveal" data-d="3">
+        <div class="dh"><span class="badge">FRI</span><h4>Monetise</h4></div>
+        <ol>
+          <li>Review the week's leads</li>
+          <li>Contact renters if there's proof</li>
+          <li>Send reports to existing renters</li>
+          <li>Check payments</li>
+          <li>Plan next week's build</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DECISION RULES ===================== -->
+<section class="band band--tight">
+  <div class="wrap">
+    <span class="eyebrow reveal">Decision rules</span>
+    <h2 class="h-sec reveal">When something's off, <span class="accent">do this.</span></h2>
+    <p class="lede reveal" data-d="1">Don't guess. Match the symptom to the fix.</p>
+    <div class="decgrid">
+      <div class="dec reveal" data-d="1">
+        <div class="if">If</div><div class="ifc">No impressions after several weeks</div>
+        <div class="arrow">→ then</div>
+        <ul><li>Check indexing &amp; resubmit the sitemap</li><li>Improve the homepage &amp; internal links</li><li>Add more specific suburb / service pages</li></ul>
+      </div>
+      <div class="dec reveal" data-d="2">
+        <div class="if">If</div><div class="ifc">Impressions but no clicks</div>
+        <div class="arrow">→ then</div>
+        <ul><li>Improve title tags &amp; meta descriptions</li><li>Make the offer clearer</li><li>Use stronger service / location wording</li></ul>
+      </div>
+      <div class="dec reveal" data-d="1">
+        <div class="if">If</div><div class="ifc">Clicks but no leads</div>
+        <div class="arrow">→ then</div>
+        <ul><li>Improve the CTA &amp; phone-button visibility</li><li>Shorten the form, add trust content</li><li>Add pricing &amp; fix mobile layout</li></ul>
+      </div>
+      <div class="dec reveal" data-d="2">
+        <div class="if">If</div><div class="ifc">Leads but no renter</div>
+        <div class="arrow">→ then</div>
+        <ul><li>Contact 20 businesses</li><li>Offer a 14-day lead trial</li><li>Show traffic screenshots &amp; exclusive access</li></ul>
+      </div>
+    </div>
+
+    <p class="sub-h reveal" data-d="1">A title fix, in practice</p>
+    <div class="titlefix reveal" data-d="2">
+      <div class="tf weak"><div class="lab">✕ Weak</div><code>Roadworthy Logan | Home</code></div>
+      <div class="tf strong"><div class="lab">✓ Strong</div><code>Mobile Roadworthy Certificates Logan | Same-Day Safety Checks</code></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== ETHICS ===================== -->
+<section class="band" id="ethics">
+  <div class="wrap">
+    <span class="eyebrow coral reveal">The rules of the game</span>
+    <h2 class="h-sec reveal">Honest by design. <span class="accent">Always.</span></h2>
+    <p class="lede reveal" data-d="1">This model only works long-term when it's clean. These aren't suggestions.</p>
+    <div class="cmp reveal" data-d="2">
+      <div class="col bad">
+        <div class="ch"><span class="g">✕</span>Never</div>
+        <ul>
+          <li>Use a business's number without permission</li>
+          <li>Pretend to be a business you are not</li>
+          <li>Create fake Google Business Profiles</li>
+          <li>Use fake reviews or fake addresses</li>
+          <li>Sell the same exclusive leads to multiple businesses</li>
+          <li>Mislead customers or misrepresent results</li>
+        </ul>
+      </div>
+      <div class="col good">
+        <div class="ch"><span class="g">✓</span>Always</div>
+        <ul>
+          <li>Use honest wording and track results properly</li>
+          <li>Keep ownership clear</li>
+          <li>Get consent before routing leads</li>
+          <li>Tell renters exactly what they're paying for</li>
+          <li>Define clicks vs. calls vs. leads vs. booked jobs</li>
+          <li>Stay accurate in every monthly report</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLOSING ===================== -->
+<section class="closing">
+  <div class="wrap">
+    <span class="eyebrow reveal" style="justify-content:center">Final word</span>
+    <p class="big reveal" data-d="1">You don't need to be an <span class="li">SEO genius</span> to start. You need to <span class="am">build, track, learn, improve</span> — and monetise.</p>
+    <p class="sub reveal" data-d="2">Treat it like a portfolio. Some sites will do nothing. Some will show signs of life. A few become real assets. Build the assets, track the truth, double down on the winners, and rent the lead flow.</p>
+    <div class="mantra reveal" data-d="2">
+      <span><b>Build</b> the assets</span>
+      <span><b>Track</b> the truth</span>
+      <span><b>Double down</b> on winners</span>
+      <span><b>Rent</b> the flow</span>
+    </div>
+  </div>
+</section>
+
+<footer>RANK &amp; RENT — LEAD ASSET FIELD MANUAL · BUILD · TRACK · PROVE · RENT</footer>
+
+</div><!-- /page-playbook -->
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- scroll progress ---------- */
+  var bar = document.getElementById('progress');
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max>0 ? (h.scrollTop/max*100) : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* ---------- reveal on scroll ---------- */
+  var revs = document.querySelectorAll('.reveal');
+  if(reduce){ revs.forEach(function(r){r.classList.add('in')}); }
+  else {
+    var ro = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); }});
+    },{threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    revs.forEach(function(r){ ro.observe(r); });
+  }
+
+  /* ---------- count-up numbers ---------- */
+  function animateCount(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var prefix = el.getAttribute('data-prefix') || '';
+    if(reduce){ el.textContent = prefix + target.toLocaleString(); return; }
+    var dur = 1400, t0 = null;
+    function tick(ts){
+      if(!t0) t0 = ts;
+      var p = Math.min((ts - t0)/dur, 1);
+      var eased = 1 - Math.pow(1-p, 3);
+      var val = Math.round(target * eased);
+      el.textContent = prefix + val.toLocaleString();
+      if(p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  var counters = document.querySelectorAll('[data-count]');
+  var co = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ animateCount(e.target); co.unobserve(e.target); }});
+  },{threshold:0.5});
+  counters.forEach(function(c){ co.observe(c); });
+
+  /* ---------- rent ladder bars ---------- */
+  var ladder = document.getElementById('ladder');
+  if(ladder){
+    var lo = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.querySelectorAll('.barfill').forEach(function(b,i){
+            var w = b.getAttribute('data-w')+'%';
+            if(reduce){ b.style.width = w; }
+            else setTimeout(function(){ b.style.width = w; }, i*140);
+          });
+          lo.unobserve(e.target);
+        }
+      });
+    },{threshold:0.35});
+    lo.observe(ladder);
+  }
+
+  /* ---------- tracker tabs ---------- */
+  var tabs = document.querySelectorAll('.tab');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){ t.classList.remove('active'); });
+      tab.classList.add('active');
+      document.querySelectorAll('.tabpane').forEach(function(p){ p.hidden = true; });
+      var pane = document.getElementById(tab.getAttribute('data-tab'));
+      if(pane) pane.hidden = false;
+    });
+  });
+
+  /* ---------- 90-day checklist + ring ---------- */
+  var checks = document.querySelectorAll('#checks li');
+  var ringfg = document.getElementById('ringfg');
+  var ringpct = document.getElementById('ringpct');
+  var CIRC = 2 * Math.PI * 85; /* ~534 */
+  function updateRing(){
+    var done = document.querySelectorAll('#checks li.done').length;
+    var total = checks.length;
+    var frac = total ? done/total : 0;
+    ringfg.style.strokeDashoffset = (CIRC * (1 - frac)).toFixed(1);
+    ringpct.textContent = Math.round(frac*100) + '%';
+  }
+  ringfg.style.strokeDasharray = CIRC.toFixed(1);
+  ringfg.style.strokeDashoffset = CIRC.toFixed(1);
+  checks.forEach(function(li){
+    li.setAttribute('tabindex','0');
+    li.setAttribute('role','button');
+    function toggle(){ li.classList.toggle('done'); updateRing(); }
+    li.addEventListener('click', toggle);
+    li.addEventListener('keydown', function(ev){
+      if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); toggle(); }
+    });
+  });
+
+  /* ---------- dot nav active state ---------- */
+  var dotlinks = document.querySelectorAll('#dotnav a');
+  var secMap = {};
+  dotlinks.forEach(function(a){
+    var id = a.getAttribute('href').slice(1);
+    var el = document.getElementById(id);
+    if(el) secMap[id] = a;
+  });
+  var secEls = Object.keys(secMap).map(function(id){ return document.getElementById(id); });
+  if(secEls.length){
+    var so = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          dotlinks.forEach(function(a){ a.classList.remove('active'); });
+          var a = secMap[e.target.id];
+          if(a) a.classList.add('active');
+        }
+      });
+    },{rootMargin:'-45% 0px -50% 0px'});
+    secEls.forEach(function(el){ so.observe(el); });
+  }
+  /* ---------- page switcher ---------- */
+  var pgtabs = document.querySelectorAll('.pgtab');
+  var pages = document.querySelectorAll('.page');
+  pgtabs.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var target = btn.getAttribute('data-page');
+      pgtabs.forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      pages.forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+      var pg = document.getElementById(target);
+      if(pg) pg.classList.add('active');
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+
+  /* ---------- checklist logic ---------- */
+  var CL_KEY = 'rnr_checklist_v1';
+  var clItems = document.querySelectorAll('.cl-item');
+  var clBar = document.getElementById('cl-bar');
+  var clPct = document.getElementById('cl-pct');
+  var clFraction = document.getElementById('cl-fraction');
+
+  function clSave(){
+    var state = {};
+    clItems.forEach(function(li, i){ state[i] = li.classList.contains('done'); });
+    try{ localStorage.setItem(CL_KEY, JSON.stringify(state)); } catch(e){}
+  }
+
+  function clLoad(){
+    try{
+      var raw = localStorage.getItem(CL_KEY);
+      if(!raw) return;
+      var state = JSON.parse(raw);
+      clItems.forEach(function(li, i){ if(state[i]) li.classList.add('done'); });
+    } catch(e){}
+  }
+
+  function clUpdateProgress(){
+    var total = clItems.length;
+    var done = document.querySelectorAll('.cl-item.done').length;
+    var pct = total ? Math.round(done/total*100) : 0;
+    if(clBar) clBar.style.width = pct + '%';
+    if(clPct) clPct.textContent = pct + '%';
+    if(clFraction) clFraction.textContent = done + ' / ' + total;
+    /* update per-section counts */
+    document.querySelectorAll('.cl-section').forEach(function(sec){
+      var all = sec.querySelectorAll('.cl-item').length;
+      var doneInSec = sec.querySelectorAll('.cl-item.done').length;
+      var countEl = sec.querySelector('.cl-sec-count');
+      if(countEl) countEl.textContent = doneInSec + ' / ' + all + ' done';
+      if(doneInSec === all && all > 0) sec.classList.add('all-done');
+      else sec.classList.remove('all-done');
+    });
+  }
+
+  clLoad();
+  clUpdateProgress();
+
+  clItems.forEach(function(li){
+    function toggle(){
+      li.classList.toggle('done');
+      clUpdateProgress();
+      clSave();
+    }
+    li.addEventListener('click', toggle);
+    li.addEventListener('keydown', function(ev){
+      if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); toggle(); }
+    });
+  });
+
+  var resetBtn = document.getElementById('cl-reset-btn');
+  if(resetBtn){
+    resetBtn.addEventListener('click', function(){
+      if(!confirm('Reset all checklist items?')) return;
+      clItems.forEach(function(li){ li.classList.remove('done'); });
+      try{ localStorage.removeItem(CL_KEY); } catch(e){}
+      clUpdateProgress();
+    });
+  }
+
+  /* ===================== DOMAIN SCOUT ENGINE ===================== */
+  (function(){
+    /* ---- niche data ---- */
+    var nicheData = {
+      termiteBarriers: {
+        label:"Termite Barriers", minRent:500,
+        starterRent:"$500–$900/mo", provenRent:"$1,000–$1,800/mo",
+        ticketValue:"$2,000–$5,500+", difficulty:"Medium",
+        why:"High homeowner urgency. One booked barrier job can justify the monthly rent immediately. Recurring inspections keep the renter sticky.",
+        keywords:["termitebarrier","termitebarriers"],
+        actions:["termiteprotection","termitecontrol","termitesafe"],
+        rentScore:82, ticketScore:88
+      },
+      termiteTreatment: {
+        label:"Termite Treatment", minRent:500,
+        starterRent:"$500–$800/mo", provenRent:"$900–$1,500/mo",
+        ticketValue:"$1,500–$4,000+", difficulty:"Medium",
+        why:"Urgent reactive need — once termites are found, homeowners call fast. Strong search intent with suburb-level searches.",
+        keywords:["termitetreatment","termitetreatments"],
+        actions:["termiteremoval","termitecontrol","termiteexterminator"],
+        rentScore:78, ticketScore:80
+      },
+      termiteInspection: {
+        label:"Termite Inspection", minRent:500,
+        starterRent:"$500–$700/mo", provenRent:"$800–$1,200/mo",
+        ticketValue:"$300–$600 inspection + upsell to treatment",
+        difficulty:"Low–Medium",
+        why:"High volume, lower ticket but inspections lead to treatments. Good entry asset with easy competition in most suburbs.",
+        keywords:["termiteinspection","termiteinspections"],
+        actions:["termitecheck","termiteassessment","termitetest"],
+        rentScore:70, ticketScore:72
+      },
+      solarBattery: {
+        label:"Solar Battery Installation", minRent:700,
+        starterRent:"$700–$1,200/mo", provenRent:"$1,500–$3,000/mo",
+        ticketValue:"$8,000–$18,000+", difficulty:"Medium–High",
+        why:"One booked solar battery system generates enormous job value. Renters in this niche already pay heavily for leads.",
+        keywords:["solarbattery","solarbatteries"],
+        actions:["solarbatteryinstaller","solarinstallation","solarpower"],
+        rentScore:91, ticketScore:95
+      },
+      bathroomRenovations: {
+        label:"Bathroom Renovations", minRent:600,
+        starterRent:"$600–$1,000/mo", provenRent:"$1,200–$2,500/mo",
+        ticketValue:"$8,000–$25,000+", difficulty:"Medium",
+        why:"High-ticket renovation with homeowner urgency. One booked job can pay months of rent. Businesses actively seek pre-qualified leads.",
+        keywords:["bathroomrenovation","bathroomrenovations"],
+        actions:["bathroombuild","bathroomremodel","bathroomupgrade"],
+        rentScore:87, ticketScore:92
+      },
+      roofRestoration: {
+        label:"Roof Restoration", minRent:600,
+        starterRent:"$600–$1,000/mo", provenRent:"$1,200–$2,200/mo",
+        ticketValue:"$4,000–$12,000+", difficulty:"Low–Medium",
+        why:"High job value, clear suburb search intent, and existing competition is often weak outside capital cities. Great for regional QLD.",
+        keywords:["roofrestoration","roofrestorations"],
+        actions:["roofrepair","roofrehab","roofrestore"],
+        rentScore:85, ticketScore:88
+      },
+      roofPainting: {
+        label:"Roof Painting", minRent:500,
+        starterRent:"$500–$800/mo", provenRent:"$900–$1,600/mo",
+        ticketValue:"$2,500–$7,000+", difficulty:"Low–Medium",
+        why:"Faster sales cycle than full restoration. Clear visual outcome makes it easy to sell. Bundaberg and Hervey Bay are underserved.",
+        keywords:["roofpainting","roofpaint"],
+        actions:["roofpainter","roofcoating","roofcolorbond"],
+        rentScore:75, ticketScore:78
+      },
+      roofLeakRepairs: {
+        label:"Roof Leak Repairs", minRent:500,
+        starterRent:"$500–$750/mo", provenRent:"$800–$1,400/mo",
+        ticketValue:"$600–$3,500+", difficulty:"Low",
+        why:"Emergency intent — someone with a leaking roof calls immediately. High conversion rate, easier to rent early.",
+        keywords:["roofleakrepair","roofleakrepairs","roofleaks"],
+        actions:["roofleakfix","roofrepairer","emergencyroofrepair"],
+        rentScore:73, ticketScore:70
+      },
+      concreteDriveways: {
+        label:"Concrete Driveways", minRent:500,
+        starterRent:"$500–$800/mo", provenRent:"$900–$1,500/mo",
+        ticketValue:"$3,000–$10,000+", difficulty:"Low–Medium",
+        why:"Clear job scope, high homeowner intent, and concreters in regional QLD often have no digital presence at all.",
+        keywords:["concretedriveway","concretedriveways"],
+        actions:["concretepaving","concreter","concreteinstaller"],
+        rentScore:78, ticketScore:80
+      },
+      grannyFlats: {
+        label:"Granny Flats", minRent:700,
+        starterRent:"$700–$1,200/mo", provenRent:"$1,500–$3,500/mo",
+        ticketValue:"$80,000–$200,000+", difficulty:"Medium–High",
+        why:"Extremely high ticket value. One booked granny flat is worth the rent for a year. Growing demand in QLD with strict supply.",
+        keywords:["grannyflat","grannyflats"],
+        actions:["seconddwelling","grannyflatbuilder","backyard dwelling"],
+        rentScore:90, ticketScore:97
+      },
+      asbestosRemoval: {
+        label:"Asbestos Removal", minRent:600,
+        starterRent:"$600–$1,000/mo", provenRent:"$1,200–$2,500/mo",
+        ticketValue:"$3,000–$15,000+", difficulty:"Medium",
+        why:"Highly regulated, high compliance cost, and customers have no choice but to call a licensed removalist. Strong urgency.",
+        keywords:["asbestosremoval","asbestos"],
+        actions:["asbestosremoval","asberemoval","hazmatremoval"],
+        rentScore:82, ticketScore:85
+      },
+      poolBuilders: {
+        label:"Pool Builders", minRent:700,
+        starterRent:"$700–$1,200/mo", provenRent:"$1,500–$3,000/mo",
+        ticketValue:"$35,000–$80,000+", difficulty:"Medium–High",
+        why:"One booked pool is an enormous job. Pool builders have large marketing budgets and understand lead value immediately.",
+        keywords:["poolbuilder","poolbuilders","swimmingpool"],
+        actions:["poolconstruction","poolinstaller","pooldesign"],
+        rentScore:88, ticketScore:96
+      },
+      kitchenRenovations: {
+        label:"Kitchen Renovations", minRent:600,
+        starterRent:"$600–$1,000/mo", provenRent:"$1,200–$2,500/mo",
+        ticketValue:"$15,000–$45,000+", difficulty:"Medium",
+        why:"High-ticket renovation with clear suburb intent. Kitchen leads are highly competitive in metro — regional markets are underserved.",
+        keywords:["kitchenrenovation","kitchenrenovations"],
+        actions:["kitchenremodel","kitchenbuild","kitchenupgrade"],
+        rentScore:85, ticketScore:92
+      },
+      garageDoorRepairs: {
+        label:"Garage Door Repairs", minRent:500,
+        starterRent:"$500–$700/mo", provenRent:"$800–$1,200/mo",
+        ticketValue:"$300–$2,500+", difficulty:"Low",
+        why:"Emergency intent, fast calls, high conversion. Lower ticket but high volume makes it a reliable starter asset.",
+        keywords:["garagedoorrepair","garagedoorrepairs","garagedoor"],
+        actions:["garagedoorfix","garagedoorinstaller","garagedoorservice"],
+        rentScore:69, ticketScore:62
+      },
+      airConditioning: {
+        label:"Air Conditioning Installation", minRent:600,
+        starterRent:"$600–$1,000/mo", provenRent:"$1,200–$2,200/mo",
+        ticketValue:"$2,500–$8,000+", difficulty:"Medium",
+        why:"Queensland climate makes this evergreen. Split system installs are high value and businesses constantly need new leads.",
+        keywords:["airconditioning","aircon","airconditioner"],
+        actions:["acinstallation","acinstaller","airconditioninginstaller"],
+        rentScore:83, ticketScore:82
+      }
+    };
+
+    /* ---- demo seed data ---- */
+    var demoResults = [
+      {domain:"termitebarrierslogan.com.au", nicheKey:"termiteBarriers", city:"Logan", demo:true},
+      {domain:"logantermitebarriers.com.au", nicheKey:"termiteBarriers", city:"Logan", demo:true},
+      {domain:"termitetreatmentlogan.com.au", nicheKey:"termiteTreatment", city:"Logan", demo:true},
+      {domain:"termiteinspectionlogan.com.au", nicheKey:"termiteInspection", city:"Logan", demo:true},
+      {domain:"solarbatterylogan.com.au", nicheKey:"solarBattery", city:"Logan", demo:true},
+      {domain:"bathroomrenovationslogan.com.au", nicheKey:"bathroomRenovations", city:"Logan", demo:true},
+      {domain:"bundabergtermitebarriers.com.au", nicheKey:"termiteBarriers", city:"Bundaberg", demo:true},
+      {domain:"termitebarriersbundaberg.com.au", nicheKey:"termiteBarriers", city:"Bundaberg", demo:true},
+      {domain:"bundabergsolarbattery.com.au", nicheKey:"solarBattery", city:"Bundaberg", demo:true},
+      {domain:"herveybayroofrestoration.com.au", nicheKey:"roofRestoration", city:"Hervey Bay", demo:true}
+    ];
+
+    /* ---- localStorage keys ---- */
+    var SL_KEY = "rnr_scout_shortlist_v1";
+    var TS_KEY = "rnr_scout_ts_v1";
+    var shortlist = [];
+
+    function loadShortlist(){
+      try{ var r=localStorage.getItem(SL_KEY); if(r) shortlist=JSON.parse(r); }catch(e){}
+    }
+    function saveShortlist(){
+      try{ localStorage.setItem(SL_KEY, JSON.stringify(shortlist)); }catch(e){}
+    }
+    function inShortlist(domain){ return shortlist.some(function(i){return i.domain===domain;}); }
+
+    /* ---- opportunity score ---- */
+    function calcScore(nicheKey, domain){
+      var n = nicheData[nicheKey];
+      if(!n) return 60;
+      var score = 0;
+      score += Math.min(n.rentScore * 0.35, 35);      // rent potential (35pts)
+      score += Math.min(n.ticketScore * 0.30, 30);    // ticket value (30pts)
+      // domain clarity: city included = +15
+      score += 15;
+      // commercial intent: keywords match = +10
+      score += 10;
+      // difficulty penalty
+      if(n.difficulty==="Low") score += 10;
+      else if(n.difficulty==="Low–Medium") score += 7;
+      else if(n.difficulty==="Medium") score += 4;
+      else score += 1;
+      return Math.min(Math.round(score), 100);
+    }
+
+    /* ---- domain generation ---- */
+    function normaliseCity(city){
+      return city.toLowerCase().replace(/[^a-z0-9]/g,"");
+    }
+
+    function generateDomains(city, nicheKey){
+      var cn = normaliseCity(city);
+      var n = nicheData[nicheKey];
+      if(!n) return [];
+      var domains = [];
+      n.keywords.forEach(function(kw){
+        domains.push(kw+cn+".com.au");
+        domains.push(cn+kw+".com.au");
+      });
+      n.actions.forEach(function(act){
+        domains.push(act+cn+".com.au");
+        domains.push(cn+act+".com.au");
+      });
+      // deduplicate
+      return domains.filter(function(d,i,arr){return arr.indexOf(d)===i;});
+    }
+
+    /* ---- availability check (mock + backend-ready) ---- */
+    async function checkDomainAvailability(domains){
+      /* TODO: Replace with real backend call
+         POST /api/check-domains
+         body: { "domains": [...] }
+         response: { "results": [{ "domain": "...", "available": true }] }
+
+         Example:
+         const res = await fetch('/api/check-domains', {
+           method: 'POST',
+           headers: {'Content-Type':'application/json'},
+           body: JSON.stringify({ domains })
+         });
+         const data = await res.json();
+         return data.results;
+      */
+
+      // MOCK: randomly mark ~60% as available, seeded by domain name
+      return domains.map(function(d){
+        var hash = d.split('').reduce(function(a,c){return a+c.charCodeAt(0);},0);
+        return { domain:d, available: (hash % 10) >= 4 };
+      });
+    }
+
+    /* ---- render a single card ---- */
+    function renderCard(domain, nicheKey, city, isDemo, available){
+      var n = nicheData[nicheKey];
+      if(!n) return null;
+      var score = calcScore(nicheKey, domain);
+      var inSL = inShortlist(domain);
+
+      var card = document.createElement('div');
+      card.className = 'ds-card';
+      card.setAttribute('data-domain', domain);
+      card.setAttribute('data-niche', nicheKey);
+
+      var badgeHtml = isDemo
+        ? '<span class="ds-avail demo">◉ Demo</span>'
+        : '<span class="ds-avail available">✓ Available</span>';
+
+      var fillPct = score;
+      var scoreColor = score>=80 ? 'var(--lime)' : score>=65 ? 'var(--amber)' : 'var(--coral-soft)';
+
+      card.innerHTML =
+        '<div class="ds-card-top">'+
+          '<div class="ds-card-domain">'+domain+'</div>'+
+          badgeHtml+
+        '</div>'+
+        '<div class="ds-meta">'+
+          '<div class="ds-meta-item"><div class="ml">Niche</div><div class="mv">'+n.label+'</div></div>'+
+          '<div class="ds-meta-item"><div class="ml">City</div><div class="mv">'+city+'</div></div>'+
+          '<div class="ds-meta-item"><div class="ml">Starter Rent</div><div class="mv green">'+n.starterRent+'</div></div>'+
+          '<div class="ds-meta-item"><div class="ml">Proven Rent</div><div class="mv amber">'+n.provenRent+'</div></div>'+
+          '<div class="ds-meta-item"><div class="ml">Job Value</div><div class="mv">'+n.ticketValue+'</div></div>'+
+          '<div class="ds-meta-item"><div class="ml">Difficulty</div><div class="mv">'+n.difficulty+'</div></div>'+
+        '</div>'+
+        '<div class="ds-why">'+n.why+'</div>'+
+        '<div class="ds-score-wrap">'+
+          '<div class="ds-score-label"><span>Opportunity Score</span><b>'+score+' / 100</b></div>'+
+          '<div class="ds-score-track"><div class="ds-score-fill" style="width:0%;background:linear-gradient(90deg,'+scoreColor+',var(--amber))" data-score="'+fillPct+'"></div></div>'+
+        '</div>'+
+        '<div class="ds-actions">'+
+          '<button class="ds-act copy-btn" data-domain="'+domain+'">⎘ Copy</button>'+
+          '<button class="ds-act sl-btn'+(inSL?' added':'')+'" data-domain="'+domain+'" data-niche="'+nicheKey+'" data-city="'+city+'" data-score="'+score+'" data-rent="'+n.starterRent+'">'+(inSL?'✓ Shortlisted':'+ Shortlist')+'</button>'+
+          '<a class="ds-act godaddy" href="https://www.godaddy.com/en-au/domainsearch/find?domainToCheck='+domain+'" target="_blank" rel="noopener">↗ GoDaddy</a>'+
+        '</div>';
+
+      return card;
+    }
+
+    /* ---- render all results ---- */
+    function renderResults(results){
+      var grid = document.getElementById('ds-results');
+      var empty = document.getElementById('ds-empty');
+      var stats = document.getElementById('ds-stats');
+      grid.innerHTML = '';
+
+      var available = results.filter(function(r){return r.available||r.demo;});
+      if(!available.length){
+        empty.style.display='block';
+        stats.style.display='none';
+        return;
+      }
+      empty.style.display='none';
+      stats.style.display='flex';
+
+      document.getElementById('ds-total-scanned').textContent = results.length;
+      document.getElementById('ds-total-avail').textContent = available.length;
+      var niches = [...new Set(available.map(function(r){return r.nicheKey;}))];
+      document.getElementById('ds-total-niches').textContent = niches.length;
+
+      var now = Date.now();
+      try{ localStorage.setItem(TS_KEY, now); }catch(e){}
+      document.getElementById('ds-timestamp').textContent = 'Scanned ' + new Date(now).toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});
+
+      available.forEach(function(r){
+        var card = renderCard(r.domain, r.nicheKey, r.city, r.demo||false, true);
+        if(card) grid.appendChild(card);
+      });
+
+      /* animate score bars */
+      setTimeout(function(){
+        grid.querySelectorAll('.ds-score-fill').forEach(function(bar){
+          bar.style.width = bar.getAttribute('data-score') + '%';
+        });
+      }, 80);
+
+      /* bind card buttons */
+      grid.querySelectorAll('.copy-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var d = btn.getAttribute('data-domain');
+          navigator.clipboard.writeText(d).then(function(){
+            btn.textContent='✓ Copied';
+            setTimeout(function(){btn.textContent='⎘ Copy';},1800);
+          }).catch(function(){
+            btn.textContent='⎘ '+d;
+          });
+        });
+      });
+
+      grid.querySelectorAll('.sl-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var d = btn.getAttribute('data-domain');
+          var nk = btn.getAttribute('data-niche');
+          var c = btn.getAttribute('data-city');
+          var sc = btn.getAttribute('data-score');
+          var rnt = btn.getAttribute('data-rent');
+          toggleShortlist(d, nk, c, sc, rnt, btn);
+        });
+      });
+    }
+
+    /* ---- shortlist render ---- */
+    function renderShortlist(){
+      var body = document.getElementById('ds-sl-items');
+      var empty = document.getElementById('ds-sl-empty');
+      var count = document.getElementById('ds-sl-count');
+      body.innerHTML='';
+      count.textContent = shortlist.length + (shortlist.length===1?' domain':' domains');
+      if(!shortlist.length){
+        empty.style.display='block';
+        return;
+      }
+      empty.style.display='none';
+      shortlist.forEach(function(item){
+        var row = document.createElement('div');
+        row.className='ds-sl-item';
+        row.innerHTML =
+          '<span class="ds-sl-domain">'+item.domain+'</span>'+
+          '<span class="ds-sl-rent">'+item.rent+'</span>'+
+          '<span class="ds-sl-score">'+item.score+'/100</span>'+
+          '<button class="ds-sl-remove" data-domain="'+item.domain+'">✕ Remove</button>';
+        body.appendChild(row);
+      });
+      body.querySelectorAll('.ds-sl-remove').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var d = btn.getAttribute('data-domain');
+          shortlist = shortlist.filter(function(i){return i.domain!==d;});
+          saveShortlist();
+          renderShortlist();
+          /* update card button if visible */
+          var cardBtn = document.querySelector('.sl-btn[data-domain="'+d+'"]');
+          if(cardBtn){ cardBtn.classList.remove('added'); cardBtn.textContent='+ Shortlist'; }
+        });
+      });
+    }
+
+    function toggleShortlist(domain, nicheKey, city, score, rent, btn){
+      if(inShortlist(domain)){
+        shortlist = shortlist.filter(function(i){return i.domain!==domain;});
+        if(btn){ btn.classList.remove('added'); btn.textContent='+ Shortlist'; }
+      } else {
+        shortlist.push({domain:domain, nicheKey:nicheKey, city:city, score:score, rent:rent});
+        if(btn){ btn.classList.add('added'); btn.textContent='✓ Shortlisted'; }
+      }
+      saveShortlist();
+      renderShortlist();
+    }
+
+    /* ---- stale check ---- */
+    function checkStale(){
+      try{
+        var ts = localStorage.getItem(TS_KEY);
+        if(ts && (Date.now()-parseInt(ts)) > 86400000){
+          document.getElementById('ds-stale').style.display='block';
+        }
+      }catch(e){}
+    }
+
+    /* ---- main scan ---- */
+    async function runScan(useDemo){
+      var city = (document.getElementById('ds-city').value||'').trim();
+      var nicheKey = document.getElementById('ds-niche').value;
+      var grid = document.getElementById('ds-results');
+      var loading = document.getElementById('ds-loading');
+      var empty = document.getElementById('ds-empty');
+
+      grid.innerHTML='';
+      empty.style.display='none';
+      loading.style.display='block';
+
+      if(useDemo || (!city)){
+        /* show demo defaults */
+        loading.style.display='none';
+        renderResults(demoResults);
+        return;
+      }
+
+      /* build candidate list */
+      var candidates = [];
+      var niche2scan = nicheKey==='all' ? Object.keys(nicheData) : [nicheKey];
+      niche2scan.forEach(function(nk){
+        var doms = generateDomains(city, nk);
+        doms.forEach(function(d){ candidates.push({domain:d, nicheKey:nk, city:city}); });
+      });
+
+      /* check availability */
+      var avail = await checkDomainAvailability(candidates.map(function(c){return c.domain;}));
+      var availMap = {};
+      avail.forEach(function(r){ availMap[r.domain]=r.available; });
+
+      var results = candidates
+        .filter(function(c){ return availMap[c.domain]; })
+        .map(function(c){ return Object.assign({}, c, {demo:false, available:true}); });
+
+      loading.style.display='none';
+      renderResults(results);
+    }
+
+    /* ---- init ---- */
+    loadShortlist();
+    renderShortlist();
+    checkStale();
+
+    /* show demo on load */
+    (function showDefaultDemo(){
+      var loading = document.getElementById('ds-loading');
+      loading.style.display='block';
+      setTimeout(function(){
+        loading.style.display='none';
+        renderResults(demoResults);
+      }, 700);
+    })();
+
+    document.getElementById('ds-scan-btn').addEventListener('click', function(){
+      runScan(false);
+    });
+    document.getElementById('ds-refresh-btn').addEventListener('click', function(){
+      try{ localStorage.removeItem(TS_KEY); }catch(e){}
+      document.getElementById('ds-stale').style.display='none';
+      runScan(false);
+    });
+    document.getElementById('ds-clear-sl').addEventListener('click', function(){
+      if(!shortlist.length) return;
+      if(!confirm('Clear all shortlisted domains?')) return;
+      shortlist=[];
+      saveShortlist();
+      renderShortlist();
+      document.querySelectorAll('.sl-btn.added').forEach(function(b){
+        b.classList.remove('added'); b.textContent='+ Shortlist';
+      });
+    });
+
+    /* re-init when scout tab is activated */
+    document.querySelectorAll('.pgtab').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if(btn.getAttribute('data-page')==='page-scout'){
+          checkStale();
+        }
+      });
+    });
+
+  })();
+
+})();
+</script>
+</body>
+</html>
